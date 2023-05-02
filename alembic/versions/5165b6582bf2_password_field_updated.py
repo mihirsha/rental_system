@@ -1,8 +1,8 @@
-"""creating user
+"""password field updated
 
-Revision ID: 1c754c5d720d
-Revises: 
-Create Date: 2023-05-01 16:26:15.938255
+Revision ID: 5165b6582bf2
+Revises: 1c754c5d720d
+Create Date: 2023-05-02 11:18:59.696777
 
 """
 from alembic import op
@@ -10,13 +10,14 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1c754c5d720d'
-down_revision = None
+revision = '5165b6582bf2'
+down_revision = '1c754c5d720d'
 branch_labels = None
 depends_on = None
 
 
 def upgrade() -> None:
+
     op.create_table('user',
                     sa.Column('id', sa.Integer(),
                               nullable=False, primary_key=True),

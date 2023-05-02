@@ -4,21 +4,16 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from app.database.database import SessionLocal, engine
-import app.models as models
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-models.Base.metadata.create_all(bind=engine)
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
+from app.controller import UserController
+import psycopg2
+from app.config import settings
+import app.auth as auth
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.include_router(UserController.router)
+app.include_router(auth.router)
 
 
 @app.get("/")
