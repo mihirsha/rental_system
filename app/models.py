@@ -1,5 +1,6 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Table, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -10,3 +11,39 @@ class User(Base):
     password = Column(String, nullable=False)
     name = Column(String, nullable=False)
     phoneNumber = Column(String, nullable=False)
+
+
+association_book_author = Table(
+    'association_book_author',
+    Base.metadata,
+    Column('book_id', ForeignKey('book.id')),
+    Column('author_id', ForeignKey('author.id'))
+)
+
+
+class Books(Base):
+    __tablename__ = "book"
+
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    authors = relationship('Authors', secondary=association_book_author,
+                           backref='book',
+                           )
+
+    def __repr__(self):
+        return f"<Books {self.title}>"
+
+
+class Authors(Base):
+    __tablename__ = "author"
+
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = Column(String, nullable=False)
+    # books = relationship('Books', secondary=association_book_author,
+    #                      #  backref='author',
+    #                      back_populates='author'
+    #                      )
+
+    def __repr__(self):
+        return f"<Authors {self.name}>"

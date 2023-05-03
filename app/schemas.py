@@ -26,3 +26,26 @@ class UserOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Book(BaseModel):
+    title: str
+    description: Optional[str] = None
+    authors: list[int]
+
+
+class Author(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class BookOut(BaseModel):
+    title: str
+    description: Optional[str] = None
+    authors: list[Author]
+
+    class Config:
+        orm_mode = True
