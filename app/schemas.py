@@ -27,6 +27,7 @@ class Book(BaseModel):
     title: str
     description: Optional[str] = None
     authors: list[int]
+    genres: list[int]
 
 
 class Author(BaseModel):
@@ -41,6 +42,7 @@ class BookOut(BaseModel):
     title: str
     description: Optional[str] = None
     authors: list[Author]
+    genres: list[int]
 
     class Config:
         orm_mode = True
@@ -66,10 +68,19 @@ class UserOutBokResponse(BaseModel):
         orm_mode = True
 
 
+class Genres(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
 class BookResponse(BaseModel):
     title: str
     description: Optional[str] = None
     authors: list[Author]
+    genres: list[Genres]
     userRented: Optional[UserOutBokResponse] = None
 
     class Config:

@@ -21,6 +21,13 @@ association_book_author = Table(
     Column('author_id', ForeignKey('author.id'))
 )
 
+association_book_genre = Table(
+    'association_book_genre',
+    Base.metadata,
+    Column('book_id', ForeignKey('book.id')),
+    Column('genre_id', ForeignKey('genre.id'))
+)
+
 
 class Books(Base):
     __tablename__ = "book"
@@ -30,11 +37,23 @@ class Books(Base):
     description = Column(String, nullable=True)
     authors = relationship(
         'Authors', secondary=association_book_author, backref='book',)
+    genres = relationship(
+        'Genre', secondary=association_book_genre, backref='genre',)
     user_id = Column(Integer(), ForeignKey('user.id'))
     userRented = relationship('User', back_populates='books')
 
     def __repr__(self):
         return f"<Books {self.title}>"
+
+
+class Genre(Base):
+    __tablename__ = "genre"
+
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = Column(String, nullable=False)
+
+    def __repr__(self):
+        return f"<Genre {self.name}>"
 
 
 class Authors(Base):

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, status, HTTPException, Response
 from app.database.database import get_db
-from app.models import Authors, Books, User
+from app.models import Authors, Books, User, Genre
 from app.utils import hash, validMobileNumber
 from app.schemas import Book, BookOut, updateBookUser
 
@@ -10,6 +10,7 @@ class BookService:
 
     def addBook(reqbook: Book, db: Session):
         authorsList = []
+        genreList = []
         book = db.query(Books).filter(reqbook.title == Books.title).first()
         if book is not None:
             raise HTTPException(
@@ -21,14 +22,25 @@ class BookService:
 
             if author is None:
                 raise HTTPException(
-                    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"author with id {reqbook.authors[i]} already exists")
+                    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"author with id {reqbook.authors[i]} does not exists")
             else:
                 authorsList.append(author)
+
+        for i in range(len(reqbook.genres)):
+            genre: Genre = db.query(Genre).filter(
+                reqbook.genres[i] == Genre.id).first()
+
+            if genre is None:
+                raise HTTPException(
+                    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Genre with id {reqbook.authors[i]} does not exists")
+            else:
+                genreList.append(genre)
 
         newBook = Books(
             title=reqbook.title,
             description=reqbook.description,
-            authors=authorsList
+            authors=authorsList,
+            genres=genreList
         )
         db.add(newBook)
         db.commit()
