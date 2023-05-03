@@ -11,6 +11,7 @@ class User(Base):
     password = Column(String, nullable=False)
     name = Column(String, nullable=False)
     phoneNumber = Column(String, nullable=False)
+    books = relationship('Books', back_populates='userRented')
 
 
 association_book_author = Table(
@@ -27,9 +28,10 @@ class Books(Base):
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
-    authors = relationship('Authors', secondary=association_book_author,
-                           backref='book',
-                           )
+    authors = relationship(
+        'Authors', secondary=association_book_author, backref='book',)
+    user_id = Column(Integer(), ForeignKey('user.id'))
+    userRented = relationship('User', back_populates='books')
 
     def __repr__(self):
         return f"<Books {self.title}>"
@@ -40,10 +42,6 @@ class Authors(Base):
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String, nullable=False)
-    # books = relationship('Books', secondary=association_book_author,
-    #                      #  backref='author',
-    #                      back_populates='author'
-    #                      )
 
     def __repr__(self):
         return f"<Authors {self.name}>"

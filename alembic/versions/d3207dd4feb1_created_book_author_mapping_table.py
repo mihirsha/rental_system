@@ -48,9 +48,6 @@ def upgrade() -> None:
         ["id"],
     )
 
-    # op.create_primary_key("pk_association_book_author",
-    #                       "association_book_author", ["book_id", "author_id"])
-
     pass
 
 

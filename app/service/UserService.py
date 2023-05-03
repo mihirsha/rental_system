@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, status, HTTPException, Response
 from app.database.database import get_db
 from app.models import User
 from app.utils import hash, validMobileNumber
+from app.schemas import UserOut
 
 
 class UserService:
@@ -34,3 +35,7 @@ class UserService:
             db.commit()
             db.refresh(new_user)
             return new_user
+
+    def get_User(email: str, db: Session):
+        user = db.query(User).filter(User.email == email).first()
+        return user

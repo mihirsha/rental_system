@@ -1,4 +1,4 @@
-"""password field updated
+"""created user table
 
 Revision ID: 5165b6582bf2
 Revises: 1c754c5d720d

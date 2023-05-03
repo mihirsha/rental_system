@@ -2,6 +2,11 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+class updateBookUser(BaseModel):
+    user_id: int
+    book_id: int
+
+
 class Signup(BaseModel):
     email: str
     password: str
@@ -16,16 +21,6 @@ class Userlogin(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
-
-
-class UserOut(BaseModel):
-    token: str = None
-    name: str
-    email: str
-    phoneNumber: str
-
-    class Config:
-        orm_mode = True
 
 
 class Book(BaseModel):
@@ -46,6 +41,36 @@ class BookOut(BaseModel):
     title: str
     description: Optional[str] = None
     authors: list[Author]
+
+    class Config:
+        orm_mode = True
+
+
+class UserOut(BaseModel):
+    token: Optional[str] = None
+    name: str
+    email: str
+    phoneNumber: str
+    books: list[BookOut]
+
+    class Config:
+        orm_mode = True
+
+
+class UserOutBokResponse(BaseModel):
+    name: str
+    email: str
+    phoneNumber: str
+
+    class Config:
+        orm_mode = True
+
+
+class BookResponse(BaseModel):
+    title: str
+    description: Optional[str] = None
+    authors: list[Author]
+    userRented: Optional[UserOutBokResponse] = None
 
     class Config:
         orm_mode = True
