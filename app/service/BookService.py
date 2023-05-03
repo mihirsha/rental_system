@@ -46,11 +46,7 @@ class BookService:
         db.commit()
         db.refresh(newBook)
 
-        return BookOut(
-            title=newBook.title,
-            description=newBook.description,
-            authors=newBook.authors
-        )
+        return newBook
 
     def getBooks(bookName: str, db: Session):
         book = db.query(Books).filter(bookName == Books.title).first()

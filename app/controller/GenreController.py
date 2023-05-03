@@ -16,3 +16,8 @@ async def add_a_new_genre(genre: str, db:  Session = Depends(get_db)):
 @router.delete("/delete", status_code=status.HTTP_200_OK)
 async def delete_an_existing_genre(genre: str, db:  Session = Depends(get_db)):
     return GenreService.deleteGenre(genre, db)
+
+
+@router.get("/get", status_code=status.HTTP_200_OK, response_model=GenresResponse)
+async def fetch_an_existing_genre(genre: str, db:  Session = Depends(get_db)):
+    return GenreService.getGenre(genre, db)

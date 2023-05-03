@@ -32,4 +32,12 @@ class AuthorService:
         else:
             db.delete(authorFetch)
             db.commit()
-        return f"deleted author*{author}*"
+        return f"deleted author {author}"
+
+    def getAuthor(author: str, db: Session):
+        authorFetch = db.query(Authors).filter(
+            author.strip() == Authors.name).first()
+        if authorFetch is None:
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"author does not exists")
+        return authorFetch

@@ -36,9 +36,9 @@ class Books(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     authors = relationship(
-        'Authors', secondary=association_book_author, backref='book',)
+        'Authors', secondary=association_book_author, back_populates='books')
     genres = relationship(
-        'Genre', secondary=association_book_genre, backref='genre',)
+        'Genre', secondary=association_book_genre, back_populates='books')
     user_id = Column(Integer(), ForeignKey('user.id'))
     userRented = relationship('User', back_populates='books')
 
@@ -51,6 +51,8 @@ class Genre(Base):
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String, nullable=False)
+    books = relationship(
+        'Books', secondary=association_book_genre, back_populates='genres')
 
     def __repr__(self):
         return f"<Genre {self.name}>"
@@ -61,6 +63,8 @@ class Authors(Base):
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
     name = Column(String, nullable=False)
+    books = relationship(
+        'Books', secondary=association_book_author, back_populates='authors')
 
     def __repr__(self):
         return f"<Authors {self.name}>"
