@@ -24,7 +24,7 @@ def upgrade() -> None:
 
     op.create_table('association_book_genre',
                     sa.Column('book_id', sa.Integer(),
-                              nullable=False, primary_key=True),
+                              nullable=False),
                     sa.Column('genre_id', sa.Integer(), nullable=False))
 
     op.create_foreign_key(
