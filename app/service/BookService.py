@@ -52,16 +52,32 @@ class BookService:
     def updateBookUser(req: updateBookUser, db: Session):
         book: Books = db.query(Books).filter(Books.id == req.book_id).first()
         user: User = db.query(User).filter(User.id == req.user_id).first()
-        if book == None:
+        if user == None and req.user_id != -1:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail=f"User with id *{req.user_id}* does not exists")
         if book == None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with id *{req.book_id}* does not exists")
 
-        book.user_id = user.id
-        db.add(book)
-        db.commit()
-        db.refresh(book)
-
+        if req.user_id == -1:
+            book.user_id = None
+            db.add(book)
+            db.commit()
+            db.refresh(book)
+        else:
+            book.user_id = user.id
+            db.add(book)
+            db.commit()
+            db.refresh(book)
         return book
+
+    def deleteBook(book_id: int, db: Session):
+        book = db.query(Books).filter(Books.id == book_id).first()
+        if book is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with id *{book_id}* does not exists")
+
+        db.delete(book)
+        db.commit()
+
+        return f'Deleted Bookid {book_id}'
