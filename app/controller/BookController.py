@@ -1,6 +1,7 @@
 from fastapi import status, Depends, APIRouter
 from app.service.AuthorService import *
-from app.schemas import *
+from app.database.database import get_db
+from app.schema.BookSchema import *
 from app.service.BookService import *
 
 router = APIRouter(

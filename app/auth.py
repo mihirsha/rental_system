@@ -1,18 +1,18 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 from app.database.database import get_db
-import app.schemas as schemas
+from app.schema.UserSchema import *
 import app.models as models
 from app.utils import verify
 from app.oauth2 import create_access_token
-from app.schemas import UserOut
+from app.schema.UserSchema import UserOut
 
 
 router = APIRouter(tags=['Authentication'])
 
 
 @router.post('/login', response_model=UserOut)
-def login(user_credentials: schemas.Userlogin, db:  Session = Depends(get_db)):
+def login(user_credentials: Userlogin, db:  Session = Depends(get_db)):
     user = db.query(models.User).filter(
         models.User.email == user_credentials.email).first()
 

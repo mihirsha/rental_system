@@ -1,6 +1,7 @@
 from fastapi import status, Depends, APIRouter
+from app.database.database import get_db
 from app.service.GenreService import *
-from app.schemas import *
+from app.schema.GenreSchema import *
 
 router = APIRouter(
     prefix="/genre",

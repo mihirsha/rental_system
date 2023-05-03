@@ -1,9 +1,6 @@
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, Depends, status, HTTPException, Response
-from app.database.database import get_db
-from app.models import Authors, Books
-from app.utils import hash, validMobileNumber
-from app.schemas import Book, BookOut
+from fastapi import status, HTTPException
+from app.models import Authors
 
 
 class AuthorService:
