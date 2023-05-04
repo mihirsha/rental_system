@@ -1,5 +1,5 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String, Table, ForeignKey
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 
 
@@ -41,6 +41,7 @@ class Books(Base):
         'Genre', secondary=association_book_genre, back_populates='books')
     user_id = Column(Integer(), ForeignKey('user.id'))
     userRented = relationship('User', back_populates='books')
+    bookDetail = relationship('BookDetails', backref='book_details')
 
     def __repr__(self):
         return f"<Books {self.title}>"
@@ -68,3 +69,29 @@ class Authors(Base):
 
     def __repr__(self):
         return f"<Authors {self.name}>"
+
+
+class BookDetails(Base):
+    __tablename__ = "book_details"
+
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    rental_price = Column(Integer, nullable=False)
+    rental_period = Column(Integer, nullable=False)
+    availability = Column(Boolean, nullable=False)
+    book_id = Column(Integer(), ForeignKey('book.id'))
+    # book = relationship('Books', back_populates='bookDetail')
+
+    def __repr__(self):
+        return f"<bookDetails {self.id}>"
+
+
+# class Review(Base):
+#     __tablename__ = "review"
+
+#     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+#     review = Column(String, nullable=False)
+#     user_id = relationship(
+#         'User', back_populates='reviews')
+
+#     def __repr__(self):
+#         return f"<Review {self.name}>"

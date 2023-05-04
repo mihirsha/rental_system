@@ -1,4 +1,4 @@
-"""creating map between genre and books
+"""created map between genre and books
 
 Revision ID: 0afb58dc25bc
 Revises: 3ab9bf6a32a8
