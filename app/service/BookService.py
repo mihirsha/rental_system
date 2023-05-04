@@ -40,6 +40,7 @@ class BookService:
             authors=authorsList,
             genres=genreList
         )
+
         db.add(newBook)
         db.commit()
         db.refresh(newBook)

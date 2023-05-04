@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import status, HTTPException
 from app.models import BookDetails, Books
-from app.schema.BookDetailSchema import BookDetailInput, BookResponse
+from app.schema.BookDetailSchema import BookDetailInput
 
 
 class BookDetailService:
