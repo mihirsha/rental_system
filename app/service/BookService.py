@@ -7,6 +7,7 @@ from app.schema.BookSchema import Book, updateBookUser
 class BookService:
 
     def addBook(reqbook: Book, db: Session):
+
         authorsList = []
         genreList = []
         book = db.query(Books).filter(reqbook.title == Books.title).first()

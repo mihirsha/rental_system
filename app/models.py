@@ -43,7 +43,7 @@ class Books(Base):
     user_id = Column(Integer(), ForeignKey('user.id'))
     userRented = relationship('User', back_populates='books')
     bookDetail = relationship('BookDetails', backref='book_details')
-    cart = relationship('CartItems', back_populates='book')
+    cart = relationship('CartItems', back_populates='books')
 
     def __repr__(self):
         return f"<Books {self.title}>"
@@ -91,14 +91,14 @@ class CartItems(Base):
     __tablename__ = "cart_items"
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    rental_period = Column(Integer(), nullable=False)
+    rental_price = Column(Integer, nullable=False)
     user_id = Column(Integer(), ForeignKey('user.id'))
     book_id = Column(Integer(), ForeignKey('book.id'))
-    book = relationship('Books', back_populates='cart')
-    user = relationship('user', back_populates='cart')
+    user = relationship('User', back_populates='cart')
+    books = relationship('Books', back_populates='cart')
 
     def __repr__(self):
-        return f"<cart_items {self.id}>"
+        return f"<bookDetails {self.id}>"
 
 # class Review(Base):
 #     __tablename__ = "review"

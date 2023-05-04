@@ -7,6 +7,7 @@ from app.schema.CartSchema import *
 class CartService:
 
     def addItemCart(request: CartInputs, db: Session):
+        print(request.user_id)
         cartFetch = db.query(CartItems).filter(
             request.user_id == CartItems.user_id).all()
 
