@@ -88,10 +88,10 @@ class BookDetails(Base):
 
 
 class CartItems(Base):
-    __tablename__ = "cart_items"
+    __tablename__ = "cart"
 
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
-    rental_price = Column(Integer, nullable=False)
+    rental_period = Column(Integer, nullable=False)
     user_id = Column(Integer(), ForeignKey('user.id'))
     book_id = Column(Integer(), ForeignKey('book.id'))
     user = relationship('User', back_populates='cart')
