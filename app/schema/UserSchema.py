@@ -53,3 +53,13 @@ class UserOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserOutLogin(BaseModel):
+    token: Optional[str] = None
+    name: str
+    email: str
+    phoneNumber: str
+
+    class Config:
+        orm_mode = True

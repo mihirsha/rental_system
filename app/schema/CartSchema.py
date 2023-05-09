@@ -24,11 +24,19 @@ class Genres(BaseModel):
         orm_mode = True
 
 
+class BookDetails(BaseModel):
+    availability: Optional[bool] = False
+
+    class Config:
+        orm_mode = True
+
+
 class BookOut(BaseModel):
     title: str
     description: Optional[str] = None
     authors: list[Author]
     genres: list[Genres]
+    bookDetail: list[BookDetails]
 
     class Config:
         orm_mode = True
