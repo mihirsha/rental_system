@@ -36,4 +36,7 @@ class UserService:
 
     def getUser(email: str, db: Session):
         user = db.query(User).filter(User.email == email).first()
+        if user == None:
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Account {email} does not exists")
         return user

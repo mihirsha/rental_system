@@ -44,12 +44,21 @@ class BookOut(BaseModel):
         orm_mode = True
 
 
+class CartList(BaseModel):
+    rental_period: int
+    books: BookOut
+
+    class Config:
+        orm_mode = True
+
+
 class UserOut(BaseModel):
     token: Optional[str] = None
     name: str
     email: str
     phoneNumber: str
     books: list[BookOut]
+    cart: list[CartList]
 
     class Config:
         orm_mode = True
