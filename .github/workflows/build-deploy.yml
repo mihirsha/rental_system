@@ -8,33 +8,33 @@ on:
 jobs:
   Continious_integration:
     env:
-      DATABASE_HOSTNAME: localhost
-      DATABASE_PORT: 5432
-      DATABASE_PASSWORD: postgres
-      DATABASE_NAME: rental_postgres
-      DATABASE_USERNAME: rental_system
-      SECRET_KEY: uYU46G&$BZ%!8&Y*!&q7G$jxdEG9sf3P6Limk52%N@P86regE7%58@8ECr3D9o2*HiU
-      ALGORITHM: HS256
-      TOKEN_EXPIRY: 60
-      POSTGRES_USER: rental_system
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: rental_postgres
+      DATABASE_HOSTNAME: ${{ secrects.DATABASE_HOSTNAME }}
+      DATABASE_PORT: ${{ secrects.DATABASE_PORT }}
+      DATABASE_PASSWORD: ${{ secrects.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrects.DATABASE_NAME }}
+      DATABASE_USERNAME: ${{ secrects.DATABASE_USERNAME }}
+      SECRET_KEY: ${{ secrects.secret }}
+      ALGORITHM: ${{ secrects.ALGORITHM }}
+      TOKEN_EXPIRY: ${{ secrects.TOKEN_EXPIRY }}
+      POSTGRES_USER: ${{ secrects.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrects.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrects.POSTGRES_DB }}
 
     runs-on: ubuntu-latest
-    # services:
-    #   postgres:
-    #     image: postgres
-    #     env:
-    #       POSTGRES_USER: rental_system
-    #       POSTGRES_PASSWORD: postgres
-    #       POSTGRES_DB: rental_postgres_test
-    #     ports:
-    #       - 5432:5432
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    # --health-retries 5
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: ${POSTGRES_USER}
+          POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+          POSTGRES_DB: ${POSTGRES_DB}
+        ports:
+          - ${DATABASE_PORT}:${DATABASE_PORT}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+    --health-retries 5
 
     steps:
       - name: checking out
@@ -51,10 +51,10 @@ jobs:
       - name: installing all the dependency
         run: pip3 install --no-cache-dir -r requirements.txt
 
-      - name: docker compose up
-        run: |
-          sudo docker-compose up -d
-          sudo docker ps
+      # - name: docker compose up
+      #   run: |
+      #     sudo docker-compose up -d
+      #     sudo docker ps
 
       - name: running testcases
         run: pytest --disable-warnings
