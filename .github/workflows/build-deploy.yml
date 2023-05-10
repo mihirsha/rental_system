@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  Continious_Integration:
+  Continious_integration:
     env:
       DATABASE_HOSTNAME: localhost
       DATABASE_PORT: 5432
