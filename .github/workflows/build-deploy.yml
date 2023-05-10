@@ -59,19 +59,19 @@ jobs:
       - name: running testcases
         run: pytest --disable-warnings
 
-      - name: dockerizing backend app
-        run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/rental_system .
+      # - name: dockerizing backend app
+      #   run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/rental_system .
 
-      - name: pushing image to dockerhub
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PWD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          sudo docker login -u $DOCKER_USER -p $DOCKER_PWD
-          sudo docker push $DOCKER_USER/rental_system
+      # - name: pushing image to dockerhub
+      #   env:
+      #     DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
+      #     DOCKER_PWD: ${{ secrets.DOCKER_PASSWORD }}
+      #   run: |
+      #     sudo docker login -u $DOCKER_USER -p $DOCKER_PWD
+      #     sudo docker push $DOCKER_USER/rental_system
 
-      - name: docker logout
-        run: sudo docker logout
+      # - name: docker logout
+      #   run: sudo docker logout
 
   Continious_Deployment:
     runs-on: ubuntu-latest
