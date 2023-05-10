@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.service.UserService import *
 from app.database.database import get_db
 from app.schema.UserSchema import UserOut
+from app.oauth2 import get_current_user
 
 router = APIRouter(
     prefix="/users",
@@ -17,6 +18,6 @@ async def signup(user: Signup, db:  Session = Depends(get_db)):
 
 
 @router.get("", status_code=status.HTTP_200_OK, response_model=UserOut)
-async def get_current_user(email: str, db: Session = Depends(get_db)):
+async def get_current_user(db: Session = Depends(get_db), email: str = Depends(get_current_user)):
     user = UserService.getUser(email, db)
     return user

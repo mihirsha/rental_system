@@ -53,6 +53,7 @@ class CartList(BaseModel):
 
 
 class UserOut(BaseModel):
+    id: int
     token: Optional[str] = None
     name: str
     email: str
