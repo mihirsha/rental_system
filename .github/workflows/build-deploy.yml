@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - "master"
-env:
-
 jobs:
   installing_dependency:
     runs-on: ubuntu-latest
