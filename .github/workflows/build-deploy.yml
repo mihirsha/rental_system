@@ -25,8 +25,9 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: rental_system
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: rental_postgres_test
+          POSTGRES_DB: rental_postgres
         ports:
           - 5432:5432
         options: >-
