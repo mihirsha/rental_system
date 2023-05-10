@@ -29,8 +29,10 @@ jobs:
           sudo docker push $DOCKER_USER/rental_system
       - name: docker logout
         run: sudo docker logout
+
   Continious_Deployment:
     runs-on: ubuntu-latest
     needs: [Continious_Integration]
     steps:
-      name: deployment
+      - name: deployment
+        run: python3 --version
