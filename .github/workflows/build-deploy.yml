@@ -5,7 +5,7 @@ on:
     branches:
       - "master"
 jobs:
-  Continious Integration:
+  Continious_Integration:
     runs-on: ubuntu-latest
     steps:
       - name: checking out
