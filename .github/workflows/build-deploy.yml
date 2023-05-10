@@ -30,7 +30,7 @@ jobs:
       - name: docker logout
         run: sudo docker logout
 
-  Continious_Deployment:
+  Continious_Deploy:
     runs-on: ubuntu-latest
     needs: [Continious_Integration]
     steps:
