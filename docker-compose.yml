@@ -1,15 +1,15 @@
 version: '3'
 services:
-  # api:
-  #   build: .
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - '8000:8080'
-  #   env_file:
-  #     - ./.env
-  #   volumes:
-  #     - ./:/usr/src/app:ro
+  api:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - '8000:8080'
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/usr/src/app:ro
   db:
     image: postgres
     container_name: postgres
