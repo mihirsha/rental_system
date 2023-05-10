@@ -20,6 +20,17 @@ env:
 
 jobs:
   Continious_Integration:
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     runs-on: ubuntu-latest
     steps:
       - name: checking out
@@ -36,16 +47,16 @@ jobs:
       - name: installing all the dependency
         run: pip3 install --no-cache-dir -r requirements.txt
 
-      - name: docker compose up
-        run: |
-          sudo docker-compose up -d
-          sudo docker ps
+      # - name: docker compose up
+      #   run: |
+      #     sudo docker-compose up -d
+      #     sudo docker ps
 
       - name: running testcases
         run: pytest --disable-warnings
 
       - name: dockerizing backend app
-        run: sudo docker build -t mihirshah01/rental_system .
+        run: sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/rental_system .
 
       - name: pushing image to dockerhub
         env:
