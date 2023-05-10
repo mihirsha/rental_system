@@ -19,6 +19,8 @@ jobs:
       POSTGRES_USER: rental_system
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: rental_postgres
+
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres
@@ -33,7 +35,6 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    runs-on: ubuntu-latest
     steps:
       - name: checking out
         uses: actions/checkout@v2
