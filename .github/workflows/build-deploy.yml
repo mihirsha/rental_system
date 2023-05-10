@@ -26,7 +26,7 @@ jobs:
           DOCKER_PWD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           sudo docker login -u $DOCKER_USER -p $DOCKER_PWD
-          sudo docker push $DOCKER_USER/rental_system:backend_api
+          sudo docker push $DOCKER_USER/rental_system
       - name: docker logout
         run: sudo docker logout
   Continious_Deployment: 
