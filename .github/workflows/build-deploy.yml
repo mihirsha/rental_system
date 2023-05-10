@@ -5,7 +5,7 @@ on:
     branches:
       - "master"
 jobs:
-  installing_dependency:
+  Continious Integration:
     runs-on: ubuntu-latest
     steps:
       - name: checking out
@@ -19,5 +19,13 @@ jobs:
       - name: installing all the dependency
         run: pip install -r requirements.txt
       - name: dockerizing backend app
-        run: sudo docker-compose up
-        # run: sudo docker build -t rental_system .
+        run: sudo docker build -t mihirshah01/rental_system .
+      - name: pushing image to dockerhub
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PWD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          sudo docker login -u $DOCKER_USER -p $DOCKER_PWD
+          sudo docker push $DOCKER_USER/rental_system:backend_api
+      - name: docker logout
+        run: sudo docker logout
