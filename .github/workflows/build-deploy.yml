@@ -52,7 +52,7 @@ jobs:
         run: pip3 install --no-cache-dir -r requirements.txt
 
       # - name: docker compose up
-      #   run: |
+      #   run:
       #     sudo docker-compose up -d
 
       - name: running testcases
