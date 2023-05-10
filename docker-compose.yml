@@ -16,7 +16,7 @@ services:
     restart: always
     # env_file:
     #   - ./.env
-    env:
+    environment:
       POSTGRES_USER: rental_system
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: rental_postgres_test
