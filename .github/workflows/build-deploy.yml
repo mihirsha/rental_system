@@ -4,6 +4,20 @@ on:
   push:
     branches:
       - master
+
+env:
+  DATABASE_HOSTNAME: localhost
+  DATABASE_PORT: 5432
+  DATABASE_PASSWORD: postgres
+  DATABASE_NAME: rental_postgres
+  DATABASE_USERNAME: rental_system
+  SECRET_KEY: uYU46G&$BZ%!8&Y*!&q7G$jxdEG9sf3P6Limk52%N@P86regE7%58@8ECr3D9o2*HiU
+  ALGORITHM: HS256
+  TOKEN_EXPIRY: 60
+  POSTGRES_USER: rental_system
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: rental_postgres
+
 jobs:
   Continious_Integration:
     runs-on: ubuntu-latest
@@ -20,7 +34,13 @@ jobs:
         run: python -m pip install --upgrade pip
 
       - name: installing all the dependency
-        run: pip install -r requirements.txt
+        run: pip3 install --no-cache-dir -r requirements.txt
+
+      - name: docker compose up
+        run: sudo docker-compose up -d
+
+      - name: running testcases
+        run: pytest --disable-warnings -v
 
       - name: dockerizing backend app
         run: sudo docker build -t mihirshah01/rental_system .
