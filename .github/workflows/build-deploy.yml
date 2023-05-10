@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - "master"
+      - master
 jobs:
   Continious_Integration:
     runs-on: ubuntu-latest
@@ -29,8 +29,8 @@ jobs:
           sudo docker push $DOCKER_USER/rental_system
       - name: docker logout
         run: sudo docker logout
-  Continious_Deployment: 
-    needs: [Continious_Integration]
+  Continious_Deployment:
     runs-on: ubuntu-latest
-      steps:
-        name: deployment
+    needs: [Continious_Integration]
+    steps:
+      name: deployment
