@@ -29,3 +29,8 @@ jobs:
           sudo docker push $DOCKER_USER/rental_system:backend_api
       - name: docker logout
         run: sudo docker logout
+  Continious_Deployment: 
+    needs: [Continious_Integration]
+    runs-on: ubuntu-latest
+      steps:
+        name: deployment
