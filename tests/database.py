@@ -20,6 +20,13 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+try:
+    conn = psycopg2.connect(host=settings.database_hostname, database=f"{settings.database_name}_test",
+                            user=settings.database_username, password=settings.database_password, port=settings.database_port)
+    print("database connected")
+except Exception as error:
+    print("database connection failed")
+
 
 @pytest.fixture
 def session():
