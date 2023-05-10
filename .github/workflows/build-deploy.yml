@@ -8,17 +8,17 @@ on:
 jobs:
   Continious_integration:
     env:
-      DATABASE_HOSTNAME: ${{ secrects.DATABASE_HOSTNAME }}
-      DATABASE_PORT: ${{ secrects.DATABASE_PORT }}
-      DATABASE_PASSWORD: ${{ secrects.DATABASE_PASSWORD }}
-      DATABASE_NAME: ${{ secrects.DATABASE_NAME }}
-      DATABASE_USERNAME: ${{ secrects.DATABASE_USERNAME }}
-      SECRET_KEY: ${{ secrects.secret }}
-      ALGORITHM: ${{ secrects.ALGORITHM }}
-      TOKEN_EXPIRY: ${{ secrects.TOKEN_EXPIRY }}
-      POSTGRES_USER: ${{ secrects.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrects.POSTGRES_PASSWORD }}
-      POSTGRES_DB: ${{ secrects.POSTGRES_DB }}
+      DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      SECRET_KEY: ${{ secrets.secret }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      TOKEN_EXPIRY: ${{ secrets.TOKEN_EXPIRY }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
     runs-on: ubuntu-latest
     services:
