@@ -34,13 +34,8 @@ def test_delete_genre(client, name, status_code):
     assert res.status_code == status_code
 
 
-# @pytest.mark.parametrize("name, status_code", [
-#     ("Romantic", 200),
-#     ("Thriller", 200),
-# ])
-def test_to_fetch_a_genre_with_no_books(client):
-    res = client.post("/genre/add?genre=Action")
+def test_to_fetch_books_of_one_genre(client, create_books):
     res = client.get("/genre/get?genre=Action")
     genre = GenresResponse(**res.json())
-    assert genre.books == []
+    assert len(genre.books) == 2
     assert res.status_code == 200

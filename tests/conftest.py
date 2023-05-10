@@ -13,6 +13,7 @@ from alembic.config import Config
 from app.schema.UserSchema import UserOut
 from app.oauth2 import create_access_token
 from app.database.database import Base
+from app.models import Authors, Genre
 import psycopg2
 
 
@@ -70,3 +71,48 @@ def authorized_client(client, token):
     client.headers = {**client.headers,
                       "Authentication": f"{token}"}
     return client
+
+
+@pytest.fixture
+def create_authors(session):
+    add_authors = ["author1", "author2", "author3"]
+
+    def create_author_model(author):
+        return Authors(name=author)
+
+    db_arr = list(map(create_author_model, add_authors))
+
+    session.add_all(db_arr)
+    session.commit()
+
+
+@pytest.fixture
+def create_genres(session):
+    add_genre = ["Action", "Thriller", "Romance"]
+
+    def create_genre_model(genre):
+        return Genre(name=genre)
+
+    db_arr = list(map(create_genre_model, add_genre))
+
+    session.add_all(db_arr)
+    session.commit()
+
+
+@pytest.fixture
+def create_books(client, session, create_genres, create_authors):
+    res = client.post("/book/addBook", json={
+        "title": "My Book",
+        "description": "desc",
+        "authors": [1],
+        "genres": [1, 2]
+    })
+
+    res = client.post("/book/addBook", json={
+        "title": "My Book 2",
+        "description": "desc",
+        "authors": [1],
+        "genres": [1, 3]
+    })
+
+    assert res.status_code == 201
