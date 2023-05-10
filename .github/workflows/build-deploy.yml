@@ -20,5 +20,5 @@ jobs:
         run: python -m pip install --upgrade pip
       - name: installing all the dependency
         run: pip install -r requirements.txt
-      - name: dockerizing app
+      - name: dockerizing backend app
         run: sudo docker build -t rental_system .
