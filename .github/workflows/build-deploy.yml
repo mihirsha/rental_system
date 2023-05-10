@@ -19,4 +19,5 @@ jobs:
       - name: installing all the dependency
         run: pip install -r requirements.txt
       - name: dockerizing backend app
-        run: sudo docker build -t rental_system .
+        run: sudo docker-compose up
+        # run: sudo docker build -t rental_system .
