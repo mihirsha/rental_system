@@ -54,7 +54,6 @@ jobs:
       # - name: docker compose up
       #   run: |
       #     sudo docker-compose up -d
-      #     sudo docker ps
 
       - name: running testcases
         run: pytest --disable-warnings
