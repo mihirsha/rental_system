@@ -8,17 +8,6 @@ on:
 jobs:
   Continious_integration:
     env:
-      # DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
-      # DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-      # DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      # DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      # DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-      # SECRET_KEY: ${{ secrets.secret }}
-      # ALGORITHM: ${{ secrets.ALGORITHM }}
-      # TOKEN_EXPIRY: ${{ secrets.TOKEN_EXPIRY }}
-      # POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      # POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      # POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
       DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
@@ -40,7 +29,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}_test
         ports:
-          - 5432:5432
+          - ${{ secrets.DATABASE_PORT }}:${{ secrets.DATABASE_PORT }}
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
