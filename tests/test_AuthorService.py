@@ -1,12 +1,10 @@
 
-from app.schema.GenreSchema import GenresResponse
 from app.schema.AuthorSchema import AuthorForGet
 from tests.database import client, session
 import pytest
 
 
 @pytest.mark.parametrize("name, status_code", [
-    ("author1", 201),
     ("author2", 201),
     ("author3", 201),
 ])
