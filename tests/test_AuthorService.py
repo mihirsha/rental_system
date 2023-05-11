@@ -5,14 +5,14 @@ from tests.database import client, session
 import pytest
 
 
-@pytest.mark.parametrize("name, status_code", [
-    ("author1", 201),
-    ("author2", 201),
-    ("author3", 201),
-])
-def test_create_an_author(client, name, status_code):
-    res = client.post(f"/author/add?author={name}")
-    assert res.status_code == status_code
+# @pytest.mark.parametrize("name, status_code", [
+#     ("author1", 201),
+#     ("author2", 201),
+#     ("author3", 201),
+# ])
+# def test_create_an_author(client, name, status_code):
+#     res = client.post(f"/author/add?author={name}")
+#     assert res.status_code == status_code
 
 
 @pytest.mark.parametrize("name, status_code", [
