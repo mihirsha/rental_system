@@ -25,7 +25,7 @@ services:
 
   db_test:
     image: postgres
-    container_name: postgres
+    container_name: postgres_test
     restart: always
     env_file:
       - ./.env
