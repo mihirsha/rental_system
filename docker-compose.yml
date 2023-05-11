@@ -18,12 +18,21 @@ services:
     restart: always
     env_file:
       - ./.env
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  db_test:
+    image: postgres
+    container_name: postgres
+    restart: always
+    env_file:
+      - ./.env
     environment:
       - POSTGRES_DB=${POSTGRES_DB}_test
     ports:
-      - '5432:5432'
-    volumes:
-      - db:/var/lib/postgresql/data
+      - '${POSTGRES_PORT_TESTING}:5432'
 volumes:
   db:
     driver: local
