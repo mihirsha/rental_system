@@ -56,7 +56,7 @@ jobs:
           sudo docker ps
 
       - name: running testcases
-        run: pytest --disable-warnings -v
+        run: pytest --disable-warnings
 
       - name: dockerizing backend app and pushing image
         env:
