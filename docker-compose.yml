@@ -20,15 +20,6 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
-  
-  db_test:
-    image: postgres
-    container_name: postgres
-    restart: always
-    env_file:
-      - ./.env_test
-    ports:
-      - '7878:5432'
 volumes:
   db:
     driver: local
