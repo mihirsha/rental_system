@@ -14,17 +14,21 @@ services:
     image: postgres
     container_name: postgres
     restart: always
-    # environment:
-    #   - POSTGRES_USER=rental_system
-    #   - POSTGRES_PASSWORD=postgres
-      
     env_file:
       - ./.env
-      - POSTGRES_DB = $POSTGRES_DB_TESTING
     ports:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+  
+  db_test:
+    image: postgres
+    container_name: postgres
+    restart: always
+    env_file:
+      - ./.env_test
+    ports:
+      - '7878:5432'
 volumes:
   db:
     driver: local
