@@ -3,6 +3,7 @@ from sqlalchemy import delete
 from fastapi import status, HTTPException
 from app.models import Books, BookDetails, CartItems, User
 from app.schema.PaymentSchema import PaymentInput
+from datetime import datetime, timedelta
 
 
 class PaymentService:
@@ -15,6 +16,7 @@ class PaymentService:
             -> clear cart
 
         """
+        # expire = datetime.utcnow() + timedelta(days=)
 
         user = db.query(User).filter(User.email == email).first()
         bookFetch = db.query(CartItems).filter(
@@ -36,14 +38,23 @@ class PaymentService:
                     status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Book with id {book.book_id} is already taken kindly delete it from your cart")
 
         for book in bookFetch:
-            bookDetail.availability = False
+
             singleBook = db.query(Books).filter(
                 Books.id == book.book_id).first()
+            singleBook.bookDetail.availability = False
+            singleBook.bookDetail.rented_day = datetime.utcnow()
+            singleBook.bookDetail.release_day = datetime.utcnow() + \
+                timedelta(days=book.rental_period)
             singleBook.user_id = user.id
+
+            details = db.query(BookDetails).filter(
+                BookDetails.book_id == book.book_id).first()
+            details.rented_day = datetime.utcnow()
+            details.release_day = datetime.utcnow() + timedelta(days=book.rental_period)
             db.add(singleBook)
             db.commit()
 
-            db.add(bookDetail)
+            db.add(details)
             db.commit()
 
         items = db.query(CartItems).filter(CartItems.user_id == user.id).all()
@@ -61,6 +72,10 @@ class PaymentService:
 
             books[i].userRented = None
             books[i].bookDetail[0].availability = True
+
+            books[i].bookDetail[0].rented_day = None
+            books[i].bookDetail[0].release_day = None
+
             db.add(books[i])
             db.commit()
 

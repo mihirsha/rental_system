@@ -1,5 +1,5 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import relationship
 
 
@@ -42,7 +42,8 @@ class Books(Base):
         'Genre', secondary=association_book_genre, back_populates='books')
     user_id = Column(Integer(), ForeignKey('user.id'))
     userRented = relationship('User', back_populates='books')
-    bookDetail = relationship('BookDetails', backref='book_details')
+    # bookDetail = relationship('BookDetails', backref='book_details')
+    bookDetail = relationship('BookDetails', back_populates='book')
     cart = relationship('CartItems', back_populates='books')
 
     def __repr__(self):
@@ -80,8 +81,10 @@ class BookDetails(Base):
     rental_price = Column(Integer, nullable=False)
     rental_period = Column(Integer, nullable=False)
     availability = Column(Boolean, nullable=False)
+    rented_day = Column(DateTime, nullable=True)
+    release_day = Column(DateTime, nullable=True)
     book_id = Column(Integer(), ForeignKey('book.id'))
-    # book = relationship('Books', back_populates='bookDetail')
+    book = relationship('Books', back_populates='bookDetail')
 
     def __repr__(self):
         return f"<bookDetails {self.id}>"
