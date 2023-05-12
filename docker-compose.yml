@@ -1,9 +1,11 @@
 version: '3'
 
-
 services:
-  # api:
-  #   build: .
+  # fastapi:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   image: 'mihirshah01/rentalsystem:fastapi'
   #   depends_on:
   #     - db
   #   ports:
@@ -13,6 +15,8 @@ services:
   #   volumes:
   #     - ./:/usr/src/app:ro
   db:
+    depends_on:
+      - db_test
     image: postgres
     container_name: postgres
     restart: always

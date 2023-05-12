@@ -23,6 +23,16 @@ class Author(BaseModel):
         orm_mode = True
 
 
+class BookDetailInput(BaseModel):
+    book_id: int
+    rental_price: int
+    rental_period: int
+    availability: bool
+
+    class Config:
+        orm_mode = True
+
+
 class BookOut(BaseModel):
     title: str
     description: Optional[str] = None
@@ -47,6 +57,7 @@ class BookResponse(BaseModel):
     description: Optional[str] = None
     authors: list[Author]
     genres: list[Genres]
+    bookDetail: list[BookDetailInput]
     userRented: Optional[UserBook] = None
 
     class Config:

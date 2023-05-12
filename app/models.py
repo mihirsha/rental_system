@@ -98,7 +98,7 @@ class CartItems(Base):
     books = relationship('Books', back_populates='cart')
 
     def __repr__(self):
-        return f"<bookDetails {self.id}>"
+        return f"<CartItems {self.id}>"
 
 # class Review(Base):
 #     __tablename__ = "review"
