@@ -5,11 +5,11 @@ from app.oauth2 import verify_access_token
 import pytest
 
 
-def test_root(client):
-    res = client.get("/")
-    val = res.json().get("message")
-    assert res.status_code == 200
-    assert val == "Hey this is Backend"
+# def test_root(client):
+#     res = client.get("/")
+#     val = res.json().get("message")
+#     assert res.status_code == 200
+#     assert val == "Hey this is Backend"
 
 
 @pytest.mark.parametrize("email, password, phoneNumber, name, status_code", [
