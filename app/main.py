@@ -1,14 +1,19 @@
 from fastapi import FastAPI
-from app.controller import UserController, AuthorController, BookController, GenreController, BookDetailController, CartController
+from app.controller import UserController, AuthorController, BookController, GenreController, BookDetailController, CartController, PaymentController
 import app.auth as auth
+from app.jobs.newjobs import scheduler
+from app.utils import send_email
 
 app = FastAPI()
+
+scheduler.start()
 
 app.include_router(auth.router)
 app.include_router(UserController.router)
 app.include_router(BookController.router)
 app.include_router(CartController.router)
 app.include_router(BookDetailController.router)
+app.include_router(PaymentController.router)
 app.include_router(GenreController.router)
 app.include_router(AuthorController.router)
 

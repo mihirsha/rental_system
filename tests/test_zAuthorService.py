@@ -1,7 +1,6 @@
 
 from app.schema.GenreSchema import GenresResponse
 from app.schema.AuthorSchema import AuthorForGet
-from tests.database import client, session
 import pytest
 
 

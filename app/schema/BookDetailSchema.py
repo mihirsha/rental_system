@@ -76,7 +76,7 @@ class BookDetailInput(BaseModel):
     book_id: int
     rental_price: int
     rental_period: int
-    availability: bool
+    # availability: bool
 
 
 class BookResponse(BaseModel):

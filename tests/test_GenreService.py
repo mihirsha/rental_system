@@ -1,6 +1,5 @@
 
 from app.schema.GenreSchema import GenresResponse
-from tests.database import client, session
 import pytest
 
 

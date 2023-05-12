@@ -2,8 +2,11 @@ from typing import Optional
 from pydantic import BaseModel
 
 
+class CartDelete(BaseModel):
+    book_id: list[int]
+
+
 class CartInputs(BaseModel):
-    user_id: int
     book_id: list[int]
     rental_period: list[int]
 
@@ -24,7 +27,7 @@ class Genres(BaseModel):
         orm_mode = True
 
 
-class BookDetails(BaseModel):
+class BookDetailSchema(BaseModel):
     availability: Optional[bool] = False
 
     class Config:
@@ -36,7 +39,7 @@ class BookOut(BaseModel):
     description: Optional[str] = None
     authors: list[Author]
     genres: list[Genres]
-    bookDetail: list[BookDetails]
+    bookDetail: list[BookDetailSchema]
 
     class Config:
         orm_mode = True

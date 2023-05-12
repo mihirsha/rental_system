@@ -9,6 +9,11 @@ class BookDetailService:
     def addBookDetails(request: BookDetailInput, db: Session):
         bookFetch = db.query(Books).filter(
             request.book_id == Books.id).first()
+
+        if bookFetch.user_id == None:
+            availability = True
+        else:
+            availability = False
         bookDetailFetch = db.query(BookDetails).filter(
             request.book_id == BookDetails.book_id).first()
         if bookDetailFetch is not None:
@@ -17,12 +22,13 @@ class BookDetailService:
         if bookFetch is None:
             raise HTTPException(
                 status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Book does not exist")
+
         else:
             newBookDetails = BookDetails(
                 book_id=request.book_id,
                 rental_price=request.rental_price,
                 rental_period=request.rental_period,
-                availability=request.availability
+                availability=availability
             )
 
             db.add(newBookDetails)
