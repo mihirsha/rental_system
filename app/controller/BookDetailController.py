@@ -20,5 +20,5 @@ async def get_details_for_a_book(book_id: int, db:  Session = Depends(get_db)):
 
 
 @router.delete("/delete", status_code=status.HTTP_200_OK)
-async def delete_an_existing_genre(user_id: int, db:  Session = Depends(get_db)):
-    return BookDetailService.deleteBookDetail(user_id, db)
+async def delete_an_existing_details(Book_id: int, db:  Session = Depends(get_db)):
+    return BookDetailService.deleteBookDetail(Book_id, db)

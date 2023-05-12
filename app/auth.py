@@ -14,6 +14,7 @@ router = APIRouter(tags=['Authentication'])
 
 @router.post('/login', response_model=UserOutLogin)
 def login(user_credentials: Userlogin, db:  Session = Depends(get_db)):
+
     user = db.query(models.User).filter(
         models.User.email == user_credentials.email).first()
 

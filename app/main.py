@@ -4,9 +4,13 @@ import app.auth as auth
 from app.jobs.newjobs import scheduler
 from app.utils import send_email
 
+from app.database.database import get_db
+from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends, status, HTTPException
+
 app = FastAPI()
 
-scheduler.start()
+# scheduler.start()
 
 app.include_router(auth.router)
 app.include_router(UserController.router)
@@ -18,6 +22,12 @@ app.include_router(GenreController.router)
 app.include_router(AuthorController.router)
 
 
-@app.get("/")
-async def root():
+# @app.on_event('startup')
+# async def startup_event():
+#     scheduler.start()
+
+app.get('/')
+
+
+def root():
     return {"message": "Hey this is Backend"}
