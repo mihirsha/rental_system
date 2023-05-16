@@ -1,19 +1,19 @@
 version: '3'
 
 services:
-  # fastapi:
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   image: 'mihirshah01/rentalsystem:fastapi'
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - '8000:8080'
-  #   env_file:
-  #     - ./.env
-  #   volumes:
-  #     - ./:/usr/src/app:ro
+  fastapi:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: 'mihirshah01/rentalsystem:fastapi'
+    depends_on:
+      - db
+    ports:
+      - '8000:8080'
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/usr/src/app:ro
   db:
     depends_on:
       - db_test
