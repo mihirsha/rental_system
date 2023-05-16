@@ -23,7 +23,6 @@ except Exception as error:
 
 
 def get_db():
-    print("hey")
     db = SessionLocal()
     try:
         yield db
