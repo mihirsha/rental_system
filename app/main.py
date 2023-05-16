@@ -22,9 +22,9 @@ app.include_router(GenreController.router)
 app.include_router(AuthorController.router)
 
 
-# @app.on_event('startup')
-# async def startup_event():
-#     scheduler.start()
+@app.on_event('startup')
+async def startup_event():
+    scheduler.start()
 
 app.get('/')
 
