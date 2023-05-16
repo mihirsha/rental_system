@@ -23,7 +23,7 @@ services:
     env_file:
       - ./.env
     ports:
-      - '${POSTGRES_PORT}:5432'
+      - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
   db_test:
@@ -33,9 +33,9 @@ services:
     env_file:
       - ./.env
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}_test
+      - POSTGRES_DB=rental_postgres_test
     ports:
-      - '${POSTGRES_PORT_TESTING}:5432'
+      - '7878:5432'
 volumes:
   db:
     driver: local
