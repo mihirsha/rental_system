@@ -68,7 +68,7 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  Continious_Deployment:
+  Continious_Delivery:
     runs-on: ubuntu-latest
     needs: [Continious_Integration]
     steps:
