@@ -81,19 +81,13 @@ jobs:
       - name: login to user mihir
         run: |
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S su - mihir
+
+      - name: change directory and pull the changes
+        run: |
           cd ~/app/src
           git pull origin master
+
+      - name: restart services
+        run: |
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart rental_system
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart nginx
-
-      # - name: change directory and pull the changes
-      #   run: |
-      #     cd app/src
-      #     git pull origin master
-      #     echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart rental_system
-      #     echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart nginx
-
-      # - name: restart services
-      #   run: |
-      #     echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart rental_system
-      #     echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart nginx
