@@ -81,7 +81,7 @@ jobs:
       - name: see the changes
 
         env:
-          Password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
+          PASSWORD: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
         run: |
           sudo -E -u mihir ls
           sudo -E -u mihir systemctl stop nginx
