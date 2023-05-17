@@ -29,4 +29,4 @@ async def startup_event():
 
 @app.get('/')
 async def root():
-    return {"message": "Hey this is Backend - deployment test"}
+    return {"message": "Hey this is Backend"}
