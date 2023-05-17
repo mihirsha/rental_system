@@ -82,9 +82,9 @@ jobs:
         run: |
           echo '${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}'
           sudo -S su - mihir
-        env:
-          DEBIAN_FRONTEND: noninteractive
-      #           password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
+      #   env:
+      #     DEBIAN_FRONTEND: noninteractive
+      # #           password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
 
       - name: checklogged in
         run: ls
