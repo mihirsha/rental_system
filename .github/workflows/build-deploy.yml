@@ -82,7 +82,7 @@ jobs:
         run: |
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S su - mihir
           cd ~/app/src
-          pwd
+          git pull origin master
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart rental_system
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl restart nginx
 
