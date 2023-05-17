@@ -81,7 +81,8 @@ jobs:
       - name: see the changes
         run: su - mihir
         env:
-          password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
+          DEBIAN_FRONTEND: noninteractive
+#           password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
 
       - name: checklogged in
         run: ls
