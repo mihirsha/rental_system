@@ -86,4 +86,5 @@ jobs:
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S su - mihir
 
       - name: checklogged in
-        run: ls
+        run: |
+          echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S systemctl stop nginx
