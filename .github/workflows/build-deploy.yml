@@ -81,7 +81,7 @@ jobs:
       - name: see the changes
         run: |
           echo '${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}'
-          sudo su - mihir
+          sudo su - mihir -S
         env:
           DEBIAN_FRONTEND: noninteractive
       #           password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
