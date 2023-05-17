@@ -81,6 +81,7 @@ jobs:
       - name: see the changes
         run: |
           sudo -u mihir ls
+          sudo -u mihir systemctl stop nginx
       #   env:
       #     DEBIAN_FRONTEND: noninteractive
       # #           password: ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }}
