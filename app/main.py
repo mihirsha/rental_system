@@ -26,8 +26,7 @@ app.include_router(AuthorController.router)
 async def startup_event():
     scheduler.start()
 
-app.get('/')
 
-
-def root():
+@app.get('/')
+async def root():
     return {"message": "Hey this is Backend - deployment test"}
