@@ -11,6 +11,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: 'mihirshah01/rentalsystem:fastapi'
+    container_name: rental_service
     depends_on:
       - db
     ports:
@@ -25,6 +26,7 @@ services:
 
   nginx: 
     build: ./nginx
+    container_name: nginx
     volumes:
       - static:/static
     ports:
