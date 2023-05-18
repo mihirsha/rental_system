@@ -49,8 +49,8 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
-    # networks:
-    #   - fastapi-networks
+    networks:
+      - fastapi-networks
 
   db_test:
     image: postgres
@@ -62,8 +62,8 @@ services:
       - POSTGRES_DB=rental_postgres_test
     ports:
       - '7878:5432'
-    # networks:
-    #   - fastapi-networks
+    networks:
+      - fastapi-networks
 
 volumes:
   static:
