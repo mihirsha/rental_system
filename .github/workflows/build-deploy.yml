@@ -6,78 +6,78 @@ on:
       - master
 
 jobs:
-  # Continious_integration:
-  #   env:
-  #     DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
-  #     DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-  #     DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-  #     DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-  #     DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-  #     SECRET_KEY: ${{ secrets.SECRET_KEY }}
-  #     ALGORITHM: ${{ secrets.ALGORITHM }}
-  #     TOKEN_EXPIRY: ${{ secrets.TOKEN_EXPIRY }}
-  #     POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-  #     POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-  #     POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+  Continious_integration:
+    env:
+      DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      TOKEN_EXPIRY: ${{ secrets.TOKEN_EXPIRY }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: checking out
-  #       uses: actions/checkout@v2
+    steps:
+      - name: checking out
+        uses: actions/checkout@v2
 
-  #     - name: installing python version 3.10
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: "3.10.6"
+      - name: installing python version 3.10
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10.6"
 
-  #     - name: installing all the dependency
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip3 install --no-cache-dir -r requirements.txt
+      - name: installing all the dependency
+        run: |
+          python -m pip install --upgrade pip
+          pip3 install --no-cache-dir -r requirements.txt
 
-  #     - name: docker compose up
-  #       run: |
-  #         sudo docker-compose up -d
-  #         sudo docker ps
+      - name: docker compose up
+        run: |
+          sudo docker-compose up -d
+          sudo docker ps
 
-  #     - name: running testcases
-  #       run: pytest --disable-warnings
+      - name: running testcases
+        run: pytest --disable-warnings
 
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v1
-  #       with:
-  #         username: ${{ secrets.DOCKER_USERNAME }}
-  #         password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-  #     - name: Set up Docker Buildx
-  #       id: buildx
-  #       uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
 
-  #     - name: Build and push
-  #       id: docker_build
-  #       uses: docker/build-push-action@v2
-  #       with:
-  #         context: ./
-  #         file: ./Dockerfile
-  #         builder: ${{ steps.buildx.outputs.name }}
-  #         push: true
-  #         tags: ${{ secrets.DOCKER_USERNAME }}/rental_system:latest
-  #         cache-from: type=local,src=/tmp/.buildx-cache
-  #         cache-to: type=local,dest=/tmp/.buildx-cache
-  #     - name: Image digest
-  #       run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/rental_system:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
 
   Continious_Deployment:
     runs-on: self-hosted
-    # needs: [Continious_Integration]
+    needs: [Continious_Integration]
     steps:
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: ap-southeast-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-1
       - name: login to user mihir
         run: |
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S su - mihir
