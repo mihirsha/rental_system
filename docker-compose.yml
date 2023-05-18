@@ -6,6 +6,7 @@ networks:
     driver: bridge
 
 services:
+
   fastapi:
     build: 
       context: .
@@ -15,11 +16,11 @@ services:
     depends_on:
       - db
     ports:
-      - '8000:8080'
+      - '8000:8000'
     env_file:
       - ./.env
-    networks:
-      - fastapi-networks
+    # networks:
+    #   - fastapi-networks
     volumes:
       - static:/static
       - ./:/usr/src/app:ro
@@ -33,8 +34,8 @@ services:
       - '80:80'
     depends_on:
       - fastapi
-    networks:
-      - fastapi-networks
+    # networks:
+    #   - fastapi-networks
 
   db:
     depends_on:
@@ -48,8 +49,8 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
-    networks:
-      - fastapi-networks
+    # networks:
+    #   - fastapi-networks
 
   db_test:
     image: postgres
@@ -61,8 +62,9 @@ services:
       - POSTGRES_DB=rental_postgres_test
     ports:
       - '7878:5432'
-    networks:
-      - fastapi-networks
+    # networks:
+    #   - fastapi-networks
+
 volumes:
   static:
   db:
