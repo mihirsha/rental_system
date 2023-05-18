@@ -1,19 +1,39 @@
 version: '3'
 
+
+networks:
+  fastapi-networks:
+    driver: bridge
+
 services:
-  # fastapi:
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   image: 'mihirshah01/rentalsystem:fastapi'
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - '8000:8080'
-  #   env_file:
-  #     - ./.env
-  #   volumes:
-  #     - ./:/usr/src/app:ro
+  fastapi:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: 'mihirshah01/rentalsystem:fastapi'
+    depends_on:
+      - db
+    ports:
+      - '8000:8080'
+    env_file:
+      - ./.env
+    networks:
+      - fastapi-networks
+    volumes:
+      - static:/static
+      - ./:/usr/src/app:ro
+
+  nginx: 
+    build: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - '80:80'
+    depends_on:
+      - fastapi
+    networks:
+      - fastapi-networks
+
   db:
     depends_on:
       - db_test
@@ -26,6 +46,9 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - fastapi-networks
+
   db_test:
     image: postgres
     container_name: postgres_test
@@ -36,6 +59,9 @@ services:
       - POSTGRES_DB=rental_postgres_test
     ports:
       - '7878:5432'
+    networks:
+      - fastapi-networks
 volumes:
+  static:
   db:
     driver: local
