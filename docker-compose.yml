@@ -19,8 +19,8 @@ services:
       - '8000:8080'
     env_file:
       - ./.env
-    # networks:
-    #   - fastapi-networks
+    networks:
+      - fastapi-networks
     volumes:
       - static:/static
       - ./:/usr/src/app:ro
@@ -34,8 +34,8 @@ services:
       - '80:80'
     depends_on:
       - fastapi
-    # networks:
-    #   - fastapi-networks
+    networks:
+      - fastapi-networks
 
   db:
     depends_on:
