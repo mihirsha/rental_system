@@ -89,5 +89,5 @@ jobs:
 
       - name: restart services
         run: |
-          sudo docker-compose down
-          sudo docker-compose up -d
+          echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S docker-compose down
+          echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S docker-compose up -d
