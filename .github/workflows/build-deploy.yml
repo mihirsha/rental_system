@@ -91,5 +91,6 @@ jobs:
       - name: Restart services
         run: |
           cd ~/app/src
+          echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S service postgresql stop
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S docker-compose down
           echo ${{ secrets.AWS_UBUNTU_SERVER_USER_MIHIR }} | sudo -E -S docker-compose up -d
