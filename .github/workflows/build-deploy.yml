@@ -91,7 +91,7 @@ jobs:
       - name: Activate Environment
         run: |
           cd ~/app
-          source env/bin/activate
+          source venv/bin/activate
 
       - name: Upgrade migrations
         run: |
