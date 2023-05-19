@@ -1,0 +1,26 @@
+pipline {
+    agent: any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'building'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy'
+            }
+        }
+        stage('Testing') {
+            steps {
+                echo 'Testing'
+            }
+        }
+        stage('Release') {
+            steps {
+                echo 'Release'
+            }
+        }
+    }
+}
