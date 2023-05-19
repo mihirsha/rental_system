@@ -88,16 +88,6 @@ jobs:
           cd ~/app/src
           git pull origin master
 
-      - name: Activate Environment
-        run: |
-          cd ~/app
-          source venv/bin/activate
-
-      - name: Upgrade migrations
-        run: |
-          cd ~/app/src
-          alembic upgrade head
-
       - name: Restart services
         run: |
           cd ~/app/src
