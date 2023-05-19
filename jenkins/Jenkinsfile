@@ -11,9 +11,11 @@ pipeline {
             steps {
                 // sh "git clone https://github.com/mihirsha/rental_system.git"
                 sh """
-                    apt update && apt upgrade -y
+                    apt-get update
+                    apt-get upgrade
+                    apt-get install -y sudo git build-essential apt-transport-https ca-certificates curl software-properties-common
                     pip3 install --upgrade pip
-                    pip3 install --no-cache-dir -r requirements.txt    
+                    pip3 install --no-cache-dir -r requirements.txt 
                 """
                 sh """
 
