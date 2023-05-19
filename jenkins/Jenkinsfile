@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // sh "git clone https://github.com/mihirsha/rental_system.git"
                 sh 'exit'
-                sh 'sudo usermod -aG sudo jenkins'
+                sh 'usermod -aG sudo jenkins'
                 sh 'su - jenkins'
                 sh 'sudo apt-get update'
                 sh 'sudo apt-get upgrade'
