@@ -8,10 +8,7 @@ networks:
 services:
 
   fastapi:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    image: 'mihirshah01/rentalsystem:fastapi'
+    image: ${DOCKER_MAIN_IMAGE}
     container_name: rental_service
     depends_on:
       - db
