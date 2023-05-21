@@ -21,7 +21,7 @@ pipeline {
                 sh """
                     cd
                     echo "$DOCKER_IMAGE"
-                    sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
+                    echo $DOCKER_HUB_CREDENTIALS_PSW | docker login --username $DOCKER_HUB_CREDENTIALS_USR --password-stdin
                 """
 
                     // sudo docker build --no-cache -t $DOCKER_IMAGE .
