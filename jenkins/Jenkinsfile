@@ -13,11 +13,14 @@ pipeline {
                 
                 sh """
                     pwd
-                    sudo apt-get update
-                    sudo apt-get upgrade
+                    docker run --user='jenkins' --rm -v `pwd`:/app -w /app apt-get update
+                    docker run --user='jenkins' --rm -v `pwd`:/app -w /app apt-get upgrade
                     pip3 install --upgrade pip
                     
                 """
+
+                    // sudo apt-get update
+                    // sudo apt-get upgrade
                 // pip3 install --no-cache-dir -r requirements.txt 
                 // sh """
 
