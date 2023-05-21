@@ -16,7 +16,6 @@ pipeline {
                     sudo apt-get update && sudo apt-get upgrade -y
                     sudo apt-get install python3-pip -y
                     sudo apt-get upgrade -y
-                    pip3 install --upgrade pip -y
                     pip3 install --no-cache-dir -r requirements.txt 
                     sudo apt-get upgrade -y
                 """
