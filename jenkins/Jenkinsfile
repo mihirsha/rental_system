@@ -1,16 +1,15 @@
 pipeline {
     agent any
 
-    // environment {
-    //     DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
-    //     DOCKER_IMAGE=credentials('dockerimage')
-    // }
+    environment {
+        DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
+        DOCKER_IMAGE=credentials('dockerimage')
+    }
 
     stages {
         stage('Build') {
             steps {
-                // sh "mkdir app && cd app"
-                
+                sh "mkdir app && cd app"
                 sh """
                     pwd
                     sudo apt-get update && sudo apt-get upgrade -y
@@ -20,14 +19,13 @@ pipeline {
                     sudo apt-get upgrade -y
                 """
                 
-                // sh """
-
-                //     sudo docker build --no-cache -t $DOCKER_IMAGE .
-                //     sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
-                //     sudo docker push $DOCKER_IMAGE
-                //     sudo docker logout
-
-                // """
+                sh """
+                    cd
+                    sudo docker build --no-cache -t $DOCKER_IMAGE .
+                    sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
+                    sudo docker push $DOCKER_IMAGE
+                    sudo docker logout
+                """
             }
         }
 
