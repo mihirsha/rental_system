@@ -10,21 +10,20 @@ pipeline {
         stage('Build') {
             steps {
                 // sh "git clone https://github.com/mihirsha/rental_system.git"
-                sh 'sudo apt-get update'
-                sh 'sudo apt-get upgrade'
                 sh """
-                    sudo apt-get install -y sudo git build-essential apt-transport-https ca-certificates curl software-properties-common
+                    sh 'sudo apt-get update'
+                    sh 'sudo apt-get upgrade'
                     pip3 install --upgrade pip
                     pip3 install --no-cache-dir -r requirements.txt 
                 """
-                sh """
+                // sh """
 
-                    sudo docker build --no-cache -t $DOCKER_IMAGE .
-                    sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
-                    sudo docker push $DOCKER_IMAGE
-                    sudo docker logout
+                //     sudo docker build --no-cache -t $DOCKER_IMAGE .
+                //     sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
+                //     sudo docker push $DOCKER_IMAGE
+                //     sudo docker logout
 
-                """
+                // """
             }
         }
 
