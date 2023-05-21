@@ -16,6 +16,6 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 
 # RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-# USER jenkins
+USER jenkins
 
 RUN jenkins-plugin-cli --plugins "blueocean docker-workflow"

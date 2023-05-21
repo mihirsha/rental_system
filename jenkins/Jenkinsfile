@@ -9,8 +9,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "mkdir app && cd app"
-                // sh "git clone https://github.com/mihirsha/rental_system.git"
+                // sh "mkdir app && cd app"
+                sh "git clone https://github.com/mihirsha/rental_system.git"
                 sh """
                     sh 'apt-get update'
                     sh 'apt-get upgrade'
