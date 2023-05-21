@@ -19,6 +19,8 @@ pipeline {
                 // """
                 // sudo usermod -aG docker jenkins
                 sh """
+                    sudo apt install docker.io
+                    sudo apt-get upgrade -y
                     sudo docker  ps
                     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
                     sudo docker build --no-cache -t $DOCKER_IMAGE .
