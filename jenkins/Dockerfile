@@ -4,7 +4,9 @@ USER root
 
 RUN apt-get update && apt-get install -y lsb-release
 
-RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d
+RUN apt-get update && apt-get install sudo
+
+RUN echo "jenkins ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers
 
 # RUN chmod 0440 /etc/sudoers.d/jenkinsnosudo
 
