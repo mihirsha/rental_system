@@ -1,13 +1,14 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
-        DOCKER_IMAGE=credentials('dockerimage')
-    }
-
     stages {
         stage('Build') {
+
+            environment {
+                DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
+                DOCKER_IMAGE=credentials('dockerimage')
+            }
+
             steps {
                 sh "mkdir app && cd app"
                 sh """
