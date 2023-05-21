@@ -13,8 +13,8 @@ pipeline {
                 
                 sh """
                     pwd
-                    sh 'apt-get update'
-                    sh 'apt-get upgrade'
+                    apt-get update
+                    apt-get upgrade
                     pip3 install --upgrade pip
                     
                 """
