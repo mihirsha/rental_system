@@ -19,8 +19,6 @@ pipeline {
                 // """
                 
                 sh """
-                    cd
-                    echo "$DOCKER_IMAGE"
                     echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
                 """
 
