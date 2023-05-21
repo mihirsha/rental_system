@@ -20,11 +20,13 @@ pipeline {
                 
                 sh """
                     cd
-                    sudo docker build --no-cache -t $DOCKER_IMAGE .
-                    sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
-                    sudo docker push $DOCKER_IMAGE
-                    sudo docker logout
+                    echo "$DOCKER_IMAGE"
                 """
+
+                    // sudo docker build --no-cache -t $DOCKER_IMAGE .
+                    // sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
+                    // sudo docker push $DOCKER_IMAGE
+                    // sudo docker logout
             }
         }
 
