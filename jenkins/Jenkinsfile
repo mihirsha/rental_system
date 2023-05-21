@@ -19,7 +19,7 @@ pipeline {
                 // """
                 
                 sh """
-                    echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                    // sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
                 """
 
                     // sudo docker build --no-cache -t $DOCKER_IMAGE .
