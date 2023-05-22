@@ -11,7 +11,7 @@ pipeline {
 
             steps {
                 // sh "sudo docker --version"
-                sh "docker ps"
+                sh "sudo docker ps"
                 // sh "sudo docker login -u mihirshah01 -p deepmihir"
                 // sh "sudo docker push mihirshah01/rental_system"
                 // dir('./Dockerfile'){
