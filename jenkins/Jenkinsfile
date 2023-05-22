@@ -11,9 +11,7 @@ pipeline {
 
             steps {
                 // sh "sudo docker --version"
-                sh "ls"
-                sh "mkdir app && cd app"
-                sh "echo jenkins | sudo -E -S su - jenkins"
+                // sh "echo jenkins | sudo -E -S su - jenkins"
                 sh "echo jenkins | sudo -E -S docker ps"
                 dir('./Dockerfile'){
                     script{
