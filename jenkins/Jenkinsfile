@@ -18,10 +18,9 @@ pipeline {
                 //     sudo apt-get upgrade -y
                 // """
                 // sudo usermod -aG docker jenkins
-                
+                    // sudo gpasswd -a jenkins docker                
                 sh """
                     sudo usermod -aG docker jenkins
-                    sudo gpasswd -a jenkins docker
                     sudo dockerd
                     sudo docker  ps
                     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
