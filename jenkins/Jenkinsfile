@@ -12,9 +12,9 @@ pipeline {
             }
 
             steps {
-                dir('./'){
+                dir('./Dockerfile'){
                     script{
-                        dockerImage = docker.build("$DOCKER_IMAGE")
+                        dockerImage = docker.build("$DOCKER_IMAGE", "-f .")
                     }
                 }
                 // sh """
