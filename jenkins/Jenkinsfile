@@ -26,6 +26,7 @@ pipeline {
                     // sudo service docker start
                 sh """
                     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+                    sudo usermod -aG docker jenkins
                     sudo docker --version
                     sudo docker ps
                     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
