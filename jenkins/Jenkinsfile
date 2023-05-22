@@ -1,17 +1,19 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile true
+    }
 
     stages {
         stage('Build') {
 
             environment {
                 DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
-                =credentials('dockerimage')
+                DOCKER_IMAGE=credentials('dockerimage')
             }
 
             steps {
 
-                dir('Dockerfile'){
+                dir('.'){
                     script{
                         dockerImage = docker.build("$DOCKER_IMAGE")
                     }
