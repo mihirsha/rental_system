@@ -13,6 +13,7 @@ pipeline {
                 // sh "sudo docker --version"
                 // sh "echo jenkins | sudo -E -S su - jenkins"
                 sh "echo jenkins | sudo -E -S docker ps"
+                sh "whoami"
                 dir('./Dockerfile'){
                     script{
                         dockerImage = docker.build("$DOCKER_IMAGE", "-f ./dockerfile")
