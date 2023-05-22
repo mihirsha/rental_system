@@ -14,11 +14,14 @@ pipeline {
                 sh """
                     echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get update && sudo apt-get upgrade -y
                     echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get install python3-pip -y
+                    sudo apt update
                     pip3 install --no-cache-dir -r requirements.txt 
                 """
                 sh """
+                    
                     echo $USER_CREDENTIALS_PSW | sudo -E -S su - $USER_CREDENTIALS_USR
                     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -E -S docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                    sudo apt update
                     sudo docker build --no-cache -t $DOCKER_IMAGE .
                     sudo docker push $DOCKER_IMAGE:latest
                     sudo docker logout
