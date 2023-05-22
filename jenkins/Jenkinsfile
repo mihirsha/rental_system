@@ -12,8 +12,7 @@ pipeline {
             }
 
             steps {
-                sh "ls"
-                dir('.'){
+                dir('./'){
                     script{
                         dockerImage = docker.build("$DOCKER_IMAGE")
                     }
