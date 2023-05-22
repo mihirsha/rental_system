@@ -7,11 +7,12 @@ pipeline {
             environment {
                 DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
                 DOCKER_IMAGE=credentials('dockerimage')
+                USER_CREDENTIALS=credentials('user')
             }
 
             steps {
                 // sh "sudo docker --version"
-                sh "echo jenkins | sudo -E -S su - jenkins"
+                sh "echo $USER_CREDENTIALS_PSW | sudo -E -S su - $USER_CREDENTIALS_USR"
                 sh "echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -S -E docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
                 // sh """
                 //     sudo apt-get update && sudo apt-get upgrade -y
