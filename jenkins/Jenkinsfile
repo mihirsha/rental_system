@@ -4,16 +4,16 @@ pipeline {
     stages {
         stage('Build') {
 
-            environment {
-                DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
-                DOCKER_IMAGE=credentials('dockerimage')
-            }
+            // environment {
+            //     DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
+            //     DOCKER_IMAGE=credentials('dockerimage')
+            // }
 
             steps {
                 sh "sudo docker --version"
                 sh "sudo docker ps"
-                sh "sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW"
-                sh "sudo docker push $DOCKER_IMAGE"
+                sh "sudo docker login -u mihirshah01 -p deepmihir"
+                sh "sudo docker push mihirshah01/rental_system"
                 // dir('./Dockerfile'){
                 //     script{
                 //         dockerImage = docker.build("$DOCKER_IMAGE", "-f ./dockerfile")
