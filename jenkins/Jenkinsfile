@@ -22,9 +22,9 @@ pipeline {
                     echo $USER_CREDENTIALS_PSW | sudo -E -S su - $USER_CREDENTIALS_USR
                     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -E -S docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
                     sudo apt update
-                    sudo docker build --no-cache -t $DOCKER_IMAGE .
-                    sudo docker push $DOCKER_IMAGE:latest
-                    sudo docker logout
+                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker build --no-cache -t $DOCKER_IMAGE .
+                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker push $DOCKER_IMAGE:latest
+                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker logout
                 """
             }
         }
