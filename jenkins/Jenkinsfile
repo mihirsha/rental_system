@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // sh "sudo docker --version"
                 // sh "echo jenkins | sudo -E -S su - jenkins"
-                sh "echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
+                sh "echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -S -E docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
                 sh """
                     sudo apt-get update && sudo apt-get upgrade -y
                     sudo apt-get install python3-pip -y
