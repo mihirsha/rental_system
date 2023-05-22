@@ -12,11 +12,11 @@ pipeline {
             }
 
             steps {
-                dir('./Dockerfile'){
-                    script{
-                        dockerImage = docker.build("$DOCKER_IMAGE", "-f .")
-                    }
-                }
+                // dir('./Dockerfile'){
+                //     script{
+                //         dockerImage = docker.build("$DOCKER_IMAGE", "-f .")
+                //     }
+                // }
                 // sh """
                 //     sudo apt-get update && sudo apt-get upgrade -y
                 //     sudo apt-get install python3-pip -y
@@ -31,19 +31,19 @@ pipeline {
 
                     // sudo apt-get install -y docker-ce-rootless-extras
                     // sudo service docker start
-                // sh """
+                sh """
+                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                    sudo docker build --no-cache -t $DOCKER_IMAGE .
+                """
+
+
+                    // sudo apt-get update && sudo apt-get upgrade -y
+                    // sudo docker --version
+                    // sudo usermod -aG docker jenkins
+                    // sudo apt-get update && sudo apt-get upgrade -y
+                    // sudo service docker start
+                    // sudo docker ps
                     
-                //     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-                //     sudo apt-get update && sudo apt-get upgrade -y
-                //     sudo docker --version
-                //     sudo usermod -aG docker jenkins
-                //     sudo apt-get update && sudo apt-get upgrade -y
-                //     sudo service docker start
-                //     sudo docker ps
-                    
-                //     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
-                //     sudo docker build --no-cache -t $DOCKER_IMAGE .
-                // """
 
                     
                     // sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
