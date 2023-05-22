@@ -21,9 +21,10 @@ pipeline {
                     // sudo gpasswd -a jenkins docker                
                 // sudo usermod -aG docker jenkins
                 // sudo dockerd
+
+                    // sudo apt-get install -y docker-ce-rootless-extras
+                    // sudo service docker start
                 sh """
-                    sudo apt-get install -y docker-ce-rootless-extras
-                    sudo service docker start
                     sudo docker --version
                     sudo docker ps
                     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
