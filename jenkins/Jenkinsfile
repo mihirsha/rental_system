@@ -4,43 +4,22 @@ pipeline {
     stages {
         stage('Build') {
 
-            // environment {
-            //     DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
-            //     DOCKER_IMAGE=credentials('dockerimage')
-            // }
+            environment {
+                DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
+                DOCKER_IMAGE=credentials('dockerimage')
+            }
 
             steps {
                 // sh "sudo docker --version"
                 // sh "echo jenkins | sudo -E -S su - jenkins"
                 sh "echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
-                // sh """
-                //     sudo apt-get update && sudo apt-get upgrade -y
-                //     sudo apt-get install python3-pip -y
-                //     sudo apt-get upgrade -y
-                //     pip3 install --no-cache-dir -r requirements.txt 
-                //     sudo apt-get upgrade -y
-                // """
-                // sudo usermod -aG docker jenkins
-                    // sudo gpasswd -a jenkins docker                
-                // sudo usermod -aG docker jenkins
-                // sudo dockerd
-
-                    // sudo apt-get install -y docker-ce-rootless-extras
-                    // sudo service docker start
-                // sh """
-                    
-                //     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-                //     sudo apt-get update && sudo apt-get upgrade -y
-                //     sudo docker --version
-                //     sudo usermod -aG docker jenkins
-                //     sudo apt-get update && sudo apt-get upgrade -y
-                //     sudo service docker start
-                //     sudo docker ps
-                    
-                
-                //     sudo docker build --no-cache -t $DOCKER_IMAGE .
-                // """
-
+                sh """
+                    sudo apt-get update && sudo apt-get upgrade -y
+                    sudo apt-get install python3-pip -y
+                    sudo apt-get upgrade -y
+                    pip3 install --no-cache-dir -r requirements.txt 
+                    sudo apt-get upgrade -y
+                """
                     
             }
         }
