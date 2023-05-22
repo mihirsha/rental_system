@@ -13,7 +13,7 @@ pipeline {
             steps {
                 // sh "sudo docker --version"
                 // sh "echo $USER_CREDENTIALS_PSW | echo $USER_CREDENTIALS_PSW  | sudo -E -S su - $USER_CREDENTIALS_USR"
-                sh "echo $USER_CREDENTIALS_PSW | echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -S -E docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
+                sh "echo $USER_CREDENTIALS_PSW | echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -E -S docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
                 // sh """
                 //     sudo apt-get update && sudo apt-get upgrade -y
                 //     sudo apt-get install python3-pip -y
