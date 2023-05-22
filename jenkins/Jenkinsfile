@@ -11,10 +11,8 @@ pipeline {
 
             steps {
                 // sh "sudo docker --version"
-                sh "sudo usermod -a -G jenkins jenkins"
-
-
-                sh "sudo docker ps"
+                sh "echo jenkins | sudo -E -S docker ps"
+                // sh "sudo docker ps"
                 // sh "sudo docker login -u mihirshah01 -p deepmihir"
                 // sh "sudo docker push mihirshah01/rental_system"
                 // dir('./Dockerfile'){
