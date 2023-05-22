@@ -11,16 +11,20 @@ pipeline {
 
             steps {
                 // sh "sudo docker --version"
+                sh "ls"
+                try {
+                    sh mkdir(dir:"app")
+                }catch(err){
+
+                }
+                cd app
                 sh "echo jenkins | sudo -E -S su - jenkins"
                 sh "echo jenkins | sudo -E -S docker ps"
-                // sh "sudo docker ps"
-                // sh "sudo docker login -u mihirshah01 -p deepmihir"
-                // sh "sudo docker push mihirshah01/rental_system"
-                // dir('./Dockerfile'){
-                //     script{
-                //         dockerImage = docker.build("$DOCKER_IMAGE", "-f ./dockerfile")
-                //     }
-                // }
+                dir('./Dockerfile'){
+                    script{
+                        dockerImage = docker.build("$DOCKER_IMAGE", "-f ./dockerfile")
+                    }
+                }
                 // sh """
                 //     sudo apt-get update && sudo apt-get upgrade -y
                 //     sudo apt-get install python3-pip -y
