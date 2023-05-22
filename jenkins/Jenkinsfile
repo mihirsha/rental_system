@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        dockerfile true
-    }
+    agent any
 
     stages {
         stage('Build') {
@@ -12,11 +10,15 @@ pipeline {
             }
 
             steps {
-                dir('./Dockerfile'){
-                    script{
-                        dockerImage = docker.build("$DOCKER_IMAGE", "-f ./dockerfile")
-                    }
-                }
+                sh "sudo docker --version"
+                sh "sudo docker ps"
+                sh "sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW"
+                sh "sudo docker push $DOCKER_IMAGE"
+                // dir('./Dockerfile'){
+                //     script{
+                //         dockerImage = docker.build("$DOCKER_IMAGE", "-f ./dockerfile")
+                //     }
+                // }
                 // sh """
                 //     sudo apt-get update && sudo apt-get upgrade -y
                 //     sudo apt-get install python3-pip -y
@@ -46,9 +48,6 @@ pipeline {
                 // """
 
                     
-                    // sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR -p $DOCKER_HUB_CREDENTIALS_PSW
-                    // sudo docker push $DOCKER_IMAGE
-                    // sudo docker logout
             }
         }
 
