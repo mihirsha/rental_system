@@ -12,11 +12,11 @@ pipeline {
 
             steps {
                 sh """
-                    echo $USER_CREDENTIALS_PSW | sudo apt-get update && sudo apt-get upgrade -y
-                    echo $USER_CREDENTIALS_PSW | sudo apt-get install python3-pip -y
-                    echo $USER_CREDENTIALS_PSW | sudo apt-get upgrade -y
+                    echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get update && sudo apt-get upgrade -y
+                    echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get install python3-pip -y
+                    echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get upgrade -y
                     pip3 install --no-cache-dir -r requirements.txt 
-                    echo $USER_CREDENTIALS_PSW | sudo apt-get upgrade -y
+                    echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get upgrade -y
                 """
                 sh """
                     echo $USER_CREDENTIALS_PSW | sudo -E -S su - $USER_CREDENTIALS_USR
