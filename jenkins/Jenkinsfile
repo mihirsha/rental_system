@@ -13,11 +13,7 @@ pipeline {
                 // sh "sudo docker --version"
                 // sh "echo jenkins | sudo -E -S su - jenkins"
                 sh "echo jenkins | sudo -E -S docker ps"
-                sh "whoami"
-                
-                script{
-                    dockerImage = docker.build("$DOCKER_IMAGE")
-                }
+                sh "echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin"
                 // sh """
                 //     sudo apt-get update && sudo apt-get upgrade -y
                 //     sudo apt-get install python3-pip -y
@@ -42,7 +38,7 @@ pipeline {
                 //     sudo service docker start
                 //     sudo docker ps
                     
-                //     echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
+                
                 //     sudo docker build --no-cache -t $DOCKER_IMAGE .
                 // """
 
