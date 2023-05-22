@@ -20,6 +20,7 @@ pipeline {
                 // sudo usermod -aG docker jenkins
                     // sudo gpasswd -a jenkins docker                
                 sh """
+                    sudo apt-get install -y docker-ce-rootless-extras
                     sudo usermod -aG docker jenkins
                     dockerd
                     docker ps
