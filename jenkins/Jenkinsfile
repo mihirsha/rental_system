@@ -26,16 +26,6 @@ pipeline {
 
                     // sudo apt-get install -y docker-ce-rootless-extras
                     // sudo service docker start
-                try {
-                    sh """
-                        sudo apt-get update && sudo apt-get upgrade -y
-                        sudo docker --version
-                        sudo usermod -aG docker jenkins
-                        sudo apt-get update && sudo apt-get upgrade -y
-                        sudo service docker start
-                        sudo docker ps
-                    """
-                }
                 sh """
                     
                     sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
