@@ -1,49 +1,71 @@
 pipeline {
     agent any
+    
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+        DOCKER_IMAGE=credentials('dockerimage')
+        USER_CREDENTIALS=credentials('user')
+    }
 
     stages {
-        stage('Build') {
-
-            environment {
-                DOCKER_HUB_CREDENTIALS=credentials('dockerhub')
-                DOCKER_IMAGE=credentials('dockerimage')
-                USER_CREDENTIALS=credentials('user')
-            }
+        stage('GIT Checkout') {
 
             steps {
-                sh """
-                    echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get update && sudo apt-get upgrade -y
-                    echo $USER_CREDENTIALS_PSW | sudo -E -S apt-get install python3-pip -y
-                    sudo apt update
-                    pip install --no-cache-dir -r requirements.txt 
-                """
-                sh """
-                    python3 -m pip install --upgrade pip
-                    echo $USER_CREDENTIALS_PSW | sudo -E -S su - $USER_CREDENTIALS_USR
-                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker build --no-cache -t $DOCKER_IMAGE .
-                """
-                    
-                sh """
-                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo -E -S docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin
-                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker push $DOCKER_IMAGE:latest
-                    echo $DOCKER_HUB_CREDENTIALS_PSW | sudo docker logout
-                """
-            }
-        }
-
-        stage('Testing') {
-            steps {
-                sh """
-                    echo $USER_CREDENTIALS_PSW | sudo -E -S sudo docker-compose up -d
-                    sudo docker ps
-                    pytest --disable-warnings
-                """
+                git changelog: false, poll: false, url: 'https://github.com/mihirsha/rental_system.git'
             }
         }
         
-        stage('Deploy') {
+        stage('OWASP Scan') {
             steps {
-                echo 'Deploy'
+                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
+            }
+        }
+        
+        stage('Sonar Analysis') {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh '''
+                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
+                    '''
+                }
+                
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub') {
+                        sh '''
+                        
+                            docker build -t $DOCKER_IMAGE .
+                            docker push $DOCKER_IMAGE 
+                            
+                        '''
+                    }
+                }
+                
+            }
+        }
+        
+        stage('Testing') {
+            steps {
+                dir('.'){
+                    
+                    sh '''
+                        echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
+                        virtualenv venv
+                        . venv/bin/activate
+                        pip install --no-cache-dir -r requirements.txt 
+                        docker-compose down
+                        echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
+                        docker-compose up -d
+                        pytest
+                        
+                    '''
+                    
+                }
+                
             }
         }
     }
