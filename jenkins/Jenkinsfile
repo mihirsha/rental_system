@@ -1,11 +1,11 @@
 pipeline {
-    agent any
+    // agent any
     
-    environment {
-        SCANNER_HOME = tool 'sonar-scanner'
-        DOCKER_IMAGE=credentials('dockerimage')
-        USER_CREDENTIALS=credentials('user')
-    }
+    // environment {
+    //     SCANNER_HOME = tool 'sonar-scanner'
+    //     DOCKER_IMAGE=credentials('dockerimage')
+    //     USER_CREDENTIALS=credentials('user')
+    // }
 
     stages {
 
