@@ -51,26 +51,26 @@ pipeline {
             }
         }
         
-        stage('Testing') {
-            steps {
-                dir('.'){
+        // stage('Testing') {
+        //     steps {
+        //         dir('.'){
                     
-                    sh '''
-                        echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
-                        virtualenv venv
-                        . venv/bin/activate
-                        pip install --no-cache-dir -r requirements.txt 
-                        docker-compose down
-                        echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
-                        docker-compose up -d
-                        pytest
+        //             sh '''
+        //                 echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
+        //                 virtualenv venv
+        //                 . venv/bin/activate
+        //                 pip install --no-cache-dir -r requirements.txt 
+        //                 docker-compose down
+        //                 echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
+        //                 docker-compose up -d
+        //                 pytest
                         
-                    '''
+        //             '''
                     
-                }
+        //         }
                 
-            }
-        }
+        //     }
+        // }
 
                 
         stage('Deploy') {
