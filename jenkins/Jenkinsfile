@@ -8,59 +8,81 @@ pipeline {
     }
 
     stages {
-        stage('GIT Checkout') {
 
-            steps {
-                git changelog: false, poll: false, url: 'https://github.com/mihirsha/rental_system.git'
-            }
-        }
+        // stage('GIT Checkout') {
+
+
+        //     steps {
+        //         git changelog: false, poll: false, url: 'https://github.com/mihirsha/rental_system.git'
+        //     }
+        // }
         
-        stage('OWASP Scan') {
-            steps {
-                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
-            }
-        }
+        // // stage('OWASP Scan') {
+        // //     steps {
+        // //         dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
+        // //     }
+        // // }
         
-        stage('Sonar Analysis') {
-            steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh '''
-                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
-                    '''
-                }
+        // stage('Sonar Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonar-server') {
+        //             sh '''
+        //                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
+        //             '''
+        //         }
                 
-            }
-        }
+        //     }
+        // }
         
-        stage('Build') {
-            steps {
-                script{
-                    withDockerRegistry(credentialsId: 'dockerhub') {
-                        sh '''
+        // stage('Build') {
+        //     steps {
+        //         script{
+        //             withDockerRegistry(credentialsId: 'dockerhub') {
+        //                 sh '''
                         
-                            docker build -t $DOCKER_IMAGE .
-                            docker push $DOCKER_IMAGE 
+        //                     docker build -t $DOCKER_IMAGE .
+        //                     docker push $DOCKER_IMAGE 
                             
-                        '''
-                    }
-                }
+        //                 '''
+        //             }
+        //         }
                 
-            }
-        }
+        //     }
+        // }
         
-        stage('Testing') {
+        // stage('Testing') {
+        //     steps {
+        //         dir('.'){
+                    
+        //             sh '''
+        //                 echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
+        //                 virtualenv venv
+        //                 . venv/bin/activate
+        //                 pip install --no-cache-dir -r requirements.txt 
+        //                 docker-compose down
+        //                 echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
+        //                 docker-compose up -d
+        //                 pytest
+                        
+        //             '''
+                    
+        //         }
+                
+        //     }
+        // }
+
+                
+        stage('Deploy') {
+            agent {
+                labels 'aws-agent'
+            }
+            
             steps {
                 dir('.'){
                     
                     sh '''
-                        echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
-                        virtualenv venv
-                        . venv/bin/activate
-                        pip install --no-cache-dir -r requirements.txt 
-                        docker-compose down
-                        echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
-                        docker-compose up -d
-                        pytest
+
+                    pwd
                         
                     '''
                     
