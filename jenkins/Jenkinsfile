@@ -74,7 +74,7 @@ pipeline {
                 
         stage('Deploy') {
             agent {
-                label 'agent-Ec2'
+                label 'agentAWS'
             }
             
             steps {
