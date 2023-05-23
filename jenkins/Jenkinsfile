@@ -78,14 +78,9 @@ pipeline {
             }
             
             steps {
-                dir('.'){
-                    
-                    sh '''
-                    su - mihir
-                        
-                    '''
-                    
-                }
+                sh """ 
+                    pwd
+                """
                 
             }
         }
