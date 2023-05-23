@@ -74,15 +74,14 @@ pipeline {
                 
         stage('Deploy') {
             agent {
-                labels 'aws-agent'
+                labels 'agent-Ec2'
             }
             
             steps {
                 dir('.'){
                     
                     sh '''
-
-                    pwd
+                    su - mihir
                         
                     '''
                     
