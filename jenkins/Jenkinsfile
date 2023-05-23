@@ -74,7 +74,7 @@ pipeline {
                 
         stage('Deploy') {
             agent {
-                labels 'agent-Ec2'
+                label 'agent-Ec2'
             }
             
             steps {
