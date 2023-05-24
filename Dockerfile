@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
+CMD export PIP_DEFAULT_TIMEOUT=100
+
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY . .
