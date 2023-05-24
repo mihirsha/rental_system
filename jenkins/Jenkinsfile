@@ -82,17 +82,19 @@ pipeline {
         //     }
         // }
 
-        post {
-            always{
-                archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
-                
-                emailext to: "mihir.shah@sleevesup.com.au",
-                // subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-                // body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
-                attachmentsPattern: '*.html'
-                
-            cleanWs()
-            }
+        
+    }
+    post {
+        always{
+            archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
+            
+            emailext to: "mihir.shah@sleevesup.com.au",
+            // subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+            // body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+            attachmentsPattern: '*.html'
+            
+        cleanWs()
         }
     }
 }
+
