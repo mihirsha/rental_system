@@ -89,8 +89,8 @@ pipeline {
             archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
             
             emailext to: "mihir.shah@sleevesup.com.au",
-            subject: "testing pipeline"
-            body: "rental_pipeline",
+            subject: "testing pipeline",
+            body: "rental pipeline",
             attachmentsPattern: '*.html'
             
         cleanWs()
