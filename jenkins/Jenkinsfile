@@ -98,13 +98,11 @@ pipeline {
     }
     post {
         always{
-            archiveArtifacts artifacts: '*.html','*.txt', onlyIfSuccessful: true
-
+            archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
             emailext to: "mihir.shah@sleevesup.com.au",
             subject: "testing pipeline",
             body: "rental pipeline",
-            
-            attachmentsPattern: '*.html','*.txt'
+            attachmentsPattern: '*.html'
             
         cleanWs()
         }
