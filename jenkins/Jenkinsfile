@@ -10,7 +10,6 @@ pipeline {
         DOCKER_CREDENTIALS=credentials('dockerhub')
     }
 
-
     stages {
         stage('GIT Checkout') {
             steps {
@@ -18,37 +17,37 @@ pipeline {
             }
         }
         
-        stage('OWASP Scan') {
-            steps {
-                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
-            }
-        }
+        // stage('OWASP Scan') {
+        //     steps {
+        //         dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
+        //     }
+        // }
         
-        stage('Sonar Analysis') {
-            steps {
-                withSonarQubeEnv('sonar-server') {
-                    sh '''
-                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
-                    '''
-                }
-                
-            }
-        }
+        // stage('Sonar Analysis') {
+        //     steps {
+        //         withSonarQubeEnv('sonar-server') {
+        //             sh '''
+        //                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
+        //             '''
+        //         }  
+        //     }
+        // }
         
-        stage('Build') {
-            steps {
-                script{
-                    withDockerRegistry(credentialsId: 'dockerhub') {
-                        sh '''
+
+        // stage('Build') {
+        //     steps {
+        //         script{
+        //             withDockerRegistry(credentialsId: 'dockerhub') {
+        //                 sh '''
                         
-                            docker build --no-cache -t $DOCKER_IMAGE .
-                            docker push $DOCKER_IMAGE 
+        //                     docker build --no-cache -t $DOCKER_IMAGE .
+        //                     docker push $DOCKER_IMAGE 
                             
-                        '''
-                    }
-                }
-            }
-        }
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
         
         stage('Testing') {
             steps {
@@ -65,37 +64,34 @@ pipeline {
                         pytest --html=report.html .
                         
                     '''
-                    
                 }
-                
             }
         }
 
-                
-        stage('Deploy') {
-            agent {
-                label 'agentAWS'
-            }
+        // stage('Deploy') {
+        //     agent {
+        //         label 'agentAWS'
+        //     }
             
-            steps {
-                sh """
-                    ls
-                """
-                script{
-                    withDockerRegistry(credentialsId: 'dockerhub') {
-                        sh '''
-                            docker ps
-                        
-                        '''
-                    }
-                    
-                }
-                sh '''
-                    echo $DOCKER_CREDENTIALS_PSW | sudo -E -S docker login --username $DOCKER_CREDENTIALS_USR --password-stdin
-                    sudo docker pull $DOCKER_IMAGE 
-                    sudo docker-compose up -d
-                '''
+        //     steps {
+        //         sh '''
+        //             echo $DOCKER_CREDENTIALS_PSW | sudo -E -S docker login --username $DOCKER_CREDENTIALS_USR --password-stdin
+        //             sudo docker pull $DOCKER_IMAGE 
+        //             sudo docker-compose up -d
+        //         '''
+        //     }
+        // }
+
+        post {
+            always{
+                archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
                 
+                emailext to: "mihir.shah@sleevesup.com.au",
+                // subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                // body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                attachmentsPattern: '*.html'
+                
+            cleanWs()
             }
         }
     }
