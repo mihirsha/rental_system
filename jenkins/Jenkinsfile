@@ -103,6 +103,7 @@ pipeline {
             emailext to: "mihir.shah@sleevesup.com.au",
             subject: "testing pipeline",
             body: "rental pipeline",
+            
             attachmentsPattern: '*.html','*.txt'
             
         cleanWs()
