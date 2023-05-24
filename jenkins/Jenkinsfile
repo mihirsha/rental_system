@@ -17,37 +17,37 @@ pipeline {
             }
         }
         
-        // stage('OWASP Scan') {
-        //     steps {
-        //         dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
-        //     }
-        // }
+        stage('OWASP Scan') {
+            steps {
+                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
+            }
+        }
         
-        // stage('Sonar Analysis') {
-        //     steps {
-        //         withSonarQubeEnv('sonar-server') {
-        //             sh '''
-        //                 $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
-        //             '''
-        //         }  
-        //     }
-        // }
+        stage('Sonar Analysis') {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh '''
+                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
+                    '''
+                }  
+            }
+        }
         
 
-        // stage('Build') {
-        //     steps {
-        //         script{
-        //             withDockerRegistry(credentialsId: 'dockerhub') {
-        //                 sh '''
+        stage('Build') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub') {
+                        sh '''
                         
-        //                     docker build --no-cache -t $DOCKER_IMAGE .
-        //                     docker push $DOCKER_IMAGE 
+                            docker build --no-cache -t $DOCKER_IMAGE .
+                            docker push $DOCKER_IMAGE 
                             
-        //                 '''
-        //             }
-        //         }
-        //     }
-        // }
+                        '''
+                    }
+                }
+            }
+        }
         
         stage('Testing') {
             steps {
@@ -61,33 +61,31 @@ pipeline {
                         docker-compose down
                         echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
                         docker-compose up -d
-                        pytest --html=report.html .
-                        
+                        pytest --html=report.html .                     
                     '''
                 }
             }
         }
 
-        // stage('Deploy') {
-        //     agent {
-        //         label 'agentAWS'
-        //     }
+        stage('Deploy') {
+            agent {
+                label 'agentAWS'
+            }
             
-        //     steps {
-        //         sh '''
-        //             echo $DOCKER_CREDENTIALS_PSW | sudo -E -S docker login --username $DOCKER_CREDENTIALS_USR --password-stdin
-        //             sudo docker pull $DOCKER_IMAGE 
-        //             sudo docker-compose up -d
-        //         '''
-        //     }
-        // }
+            steps {
+                sh '''
+                    echo $DOCKER_CREDENTIALS_PSW | sudo -E -S docker login --username $DOCKER_CREDENTIALS_USR --password-stdin
+                    sudo docker pull $DOCKER_IMAGE 
+                    sudo docker-compose up -d
+                '''
+            }
+        }
 
         
     }
     post {
         always{
             archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
-            
             emailext to: "mihir.shah@sleevesup.com.au",
             subject: "testing pipeline",
             body: "rental pipeline",
