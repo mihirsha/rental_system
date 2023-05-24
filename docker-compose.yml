@@ -14,8 +14,8 @@ services:
       - db
     ports:
       - '8000:8080'
-    env_file:
-      - ./.env
+    # env_file:
+    #   - ./.env
     networks:
       - fastapi-networks
     volumes:
