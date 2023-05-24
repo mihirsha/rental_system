@@ -38,13 +38,24 @@ pipeline {
             steps {
                 script{
                     withDockerRegistry(credentialsId: 'dockerhub') {
-                        sh '''
+                        sh """
                         
                             docker build --no-cache -t $DOCKER_IMAGE .
-                            docker push $DOCKER_IMAGE 
                             
-                        '''
+                            
+                        """
                     }
+                }
+            }
+        }
+
+        stage('Trivy Scan & Push') {
+            strps {
+                withDockerRegistry(credentialsId: 'dockerhub') {
+                    sh """
+                        trivy image $DOCKER_IMAGE > trivyReport.txt
+                        docker push $DOCKER_IMAGE
+                    """
                 }
             }
         }
@@ -53,7 +64,7 @@ pipeline {
             steps {
                 dir('.'){
                     
-                    sh '''
+                    sh """
                         echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
                         virtualenv venv
                         . venv/bin/activate
@@ -62,7 +73,7 @@ pipeline {
                         echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
                         docker-compose up -d
                         pytest --html=report.html .                     
-                    '''
+                    """
                 }
             }
         }
