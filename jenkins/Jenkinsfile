@@ -89,7 +89,7 @@ pipeline {
             archiveArtifacts artifacts: '*.html', onlyIfSuccessful: true
             
             emailext to: "mihir.shah@sleevesup.com.au",
-            // subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+            subject: "testing pipeline"
             body: "",
             attachmentsPattern: '*.html'
             
@@ -97,6 +97,6 @@ pipeline {
         }
     }
 }
-
+// "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
 // "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
 
