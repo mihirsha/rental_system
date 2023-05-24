@@ -41,7 +41,7 @@ pipeline {
                     withDockerRegistry(credentialsId: 'dockerhub') {
                         sh '''
                         
-                            docker build -t $DOCKER_IMAGE .
+                            docker build --no-cache -t $DOCKER_IMAGE .
                             docker push $DOCKER_IMAGE 
                             
                         '''
@@ -62,7 +62,7 @@ pipeline {
                         docker-compose down
                         echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
                         docker-compose up -d
-                        pytest
+                        pytest --html=report.html .
                         
                     '''
                     
