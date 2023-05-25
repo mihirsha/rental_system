@@ -69,7 +69,7 @@ pipeline {
                     sh """
                         virtualenv venv
                         . venv/bin/activate
-                        pip install -r requirements.txt
+                        pip install --no-cache-dir -r requirements.txt --timeout=100
                         echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
                         docker-compose up -d
                         pytest --html=report.html .                     
