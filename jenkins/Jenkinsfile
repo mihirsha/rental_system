@@ -65,16 +65,15 @@ pipeline {
         stage('Testing') {
             steps {
                 dir('.'){
-                    
+                    // echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
                     sh """
-                        echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
                         virtualenv venv
                         . venv/bin/activate
-                        pip install --no-cache-dir -r requirements.txt 
-                        docker-compose down
+                        pip install --no-cache-dir -r requirements.txt
                         echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
                         docker-compose up -d
                         pytest --html=report.html .                     
+                        docker-compose down
                     """
                 }
             }
