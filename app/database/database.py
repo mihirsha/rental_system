@@ -15,6 +15,7 @@ Base = declarative_base()
 
 
 try:
+    # conn = psycopg2.connect('postgresql://192.168.39.55:30432/rental_postgres')cl
     conn = psycopg2.connect(host=settings.database_hostname, database=settings.database_name,
                             user=settings.database_username, password=settings.database_password, port=settings.database_port)
     print("database connected")
