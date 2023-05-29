@@ -76,12 +76,12 @@ class BookService:
 
     def getBooks(bookName: str, db: Session):
         book = db.query(Books).filter(bookName == Books.title).first()
+        filename = f"{book.id}.pdf"
         if book is None:
             raise HTTPException(
                 status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Book with title *{bookName}* does not exists")
 
         else:
-            filename = f"{book.id}.pdf"
             SAVED_FILE = os.path.join(f"{UPLOAD_DIR}", filename)
             return book, FileResponse(
                 path=SAVED_FILE, media_type="application/octet-stream", filename=f"{filename}")
