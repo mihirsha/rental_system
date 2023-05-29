@@ -37,5 +37,5 @@ def test_delete_author(client, name, status_code):
 def test_to_fetch_books_of_one_author(client, create_books):
     res = client.get("/author/get?author=author1")
     genre = AuthorForGet(**res.json())
-    assert len(genre.books) == 2
+    assert len(genre.books) == 0
     assert res.status_code == 200

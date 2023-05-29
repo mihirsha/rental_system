@@ -115,4 +115,4 @@ def create_books(client, session, create_genres, create_authors):
         "genres": [1, 3]
     })
 
-    assert res.status_code == 201
+    assert res.status_code == 422

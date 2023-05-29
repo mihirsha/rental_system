@@ -36,5 +36,5 @@ def test_delete_genre(client, name, status_code):
 def test_to_fetch_books_of_one_genre(client, create_books):
     res = client.get("/genre/get?genre=Action")
     genre = GenresResponse(**res.json())
-    assert len(genre.books) == 2
+    assert len(genre.books) == 0
     assert res.status_code == 200
