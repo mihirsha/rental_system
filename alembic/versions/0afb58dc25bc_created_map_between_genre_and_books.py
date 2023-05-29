@@ -23,7 +23,7 @@ def upgrade() -> None:
                     sa.Column('name', sa.String, nullable=False, unique=True))
 
     op.create_table('association_book_genre',
-                    sa.Column('book_id', sa.Integer(),
+                    sa.Column('book_id', sa.UUID(),
                               nullable=False),
                     sa.Column('genre_id', sa.Integer(), nullable=False))
 

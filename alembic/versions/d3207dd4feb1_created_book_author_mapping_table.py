@@ -7,6 +7,7 @@ Create Date: 2023-05-02 15:34:17.668202
 """
 from alembic import op
 import sqlalchemy as sa
+import uuid
 
 
 # revision identifiers, used by Alembic.
@@ -18,8 +19,8 @@ depends_on = None
 
 def upgrade() -> None:
     op.create_table('book',
-                    sa.Column('id', sa.Integer(),
-                              nullable=False, primary_key=True),
+                    sa.Column('id', sa.UUID(),
+                              nullable=False, primary_key=True, default=uuid.uuid4()),
                     sa.Column('title', sa.String, nullable=False),
                     sa.Column('description', sa.String, nullable=False))
 
@@ -29,7 +30,7 @@ def upgrade() -> None:
                     sa.Column('name', sa.String, nullable=False, unique=True))
 
     op.create_table('association_book_author',
-                    sa.Column('book_id', sa.Integer(),
+                    sa.Column('book_id', sa.UUID(),
                               nullable=False),
                     sa.Column('author_id', sa.Integer(), nullable=False))
 

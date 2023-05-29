@@ -25,7 +25,7 @@ def upgrade() -> None:
                     sa.Column('rental_period', sa.Integer(), nullable=False),
                     sa.Column('availability', sa.Boolean(),
                               nullable=False, default=False),
-                    sa.Column('book_id', sa.Integer(),
+                    sa.Column('book_id', sa.UUID(),
                               nullable=False, unique=True),
                     )
 

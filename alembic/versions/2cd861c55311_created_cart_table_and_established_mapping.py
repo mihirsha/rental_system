@@ -22,7 +22,7 @@ def upgrade() -> None:
                               nullable=False, primary_key=True),
                     sa.Column('rental_period', sa.Integer(), nullable=False),
                     sa.Column('user_id', sa.Integer()),
-                    sa.Column('book_id', sa.Integer())
+                    sa.Column('book_id', sa.UUID())
                     )
 
     op.create_foreign_key(

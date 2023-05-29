@@ -2,11 +2,14 @@ from sqlalchemy.orm import Session
 from fastapi import status, HTTPException
 from app.models import Authors, Books, User, Genre
 from app.schema.BookSchema import Book, updateBookUser
+import shutil
+import uuid
+# Printing random id using uuid1()
 
 
 class BookService:
 
-    def addBook(reqbook: Book, db: Session):
+    async def addBook(reqbook: Book, db: Session, file):
 
         authorsList = []
         genreList = []
@@ -35,7 +38,9 @@ class BookService:
             else:
                 genreList.append(genre)
 
+        uuids = uuid.uuid1()
         newBook = Books(
+            id=uuids,
             title=reqbook.title,
             description=reqbook.description,
             authors=authorsList,
@@ -45,6 +50,13 @@ class BookService:
         db.add(newBook)
         db.commit()
         db.refresh(newBook)
+
+        file.filename = f"{uuids}.pdf"
+        print(file.filename)
+        contents = await file.read()
+        workdir = "books_pdf_DB/"
+        with open(f"{workdir}{file.filename}", "wb") as f:
+            f.write(contents)
 
         return newBook
 

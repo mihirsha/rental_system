@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    op.add_column('review', sa.Column('book_id', sa.Integer(), nullable=False))
+    op.add_column('review', sa.Column('book_id', sa.UUID(), nullable=False))
     op.create_foreign_key(
         "fk_book_review",
         "review",
