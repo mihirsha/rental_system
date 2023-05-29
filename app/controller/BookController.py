@@ -10,15 +10,20 @@ router = APIRouter(
 )
 
 
-# , response_model=BookOut)
-@router.post("/addBook", status_code=status.HTTP_201_CREATED)
+@router.post("/addBook", status_code=status.HTTP_201_CREATED, response_model=BookOut)
 async def to_add_a_book_with_all_the_information(book: Book = Depends(), file: UploadFile = File(...), db:  Session = Depends(get_db)):
     return await BookService.addBook(book, db, file)
 
 
-@router.get("", status_code=status.HTTP_200_OK, response_model=BookResponse)
+# response_model=BookResponse_file)
+@router.get("", status_code=status.HTTP_200_OK)
 async def to_get_info_of_a_particular_book(bookName: str, db:  Session = Depends(get_db)):
     return BookService.getBooks(bookName, db)
+
+
+@router.get("/download", status_code=status.HTTP_200_OK)
+async def to_get_info_of_a_particular_book(bookName: str, db:  Session = Depends(get_db)):
+    return BookService.downloadBooks(bookName, db)
 
 
 @router.put("/updateBook", status_code=status.HTTP_202_ACCEPTED, response_model=BookResponse)

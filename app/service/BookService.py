@@ -1,10 +1,17 @@
 from sqlalchemy.orm import Session
-from fastapi import status, HTTPException
+from fastapi import status, HTTPException, Form
 from app.models import Authors, Books, User, Genre
-from app.schema.BookSchema import Book, updateBookUser
+from app.schema.BookSchema import Book, updateBookUser, BookResponse_file
+from fastapi.responses import FileResponse
 import shutil
+import os
 import uuid
 # Printing random id using uuid1()
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
+UPLOAD_DIR = os.path.join(f"{BASE_DIR}", "books_pdf_DB")
 
 
 class BookService:
@@ -57,13 +64,15 @@ class BookService:
         db.refresh(newBook)
 
         file.filename = f"{uuids}.pdf"
-        print(file.filename)
         contents = await file.read()
-        workdir = "books_pdf_DB/"
-        with open(f"{workdir}{file.filename}", "wb") as f:
-            f.write(contents)
 
+        SAVED_FILE = os.path.join(f"{UPLOAD_DIR}", f"{file.filename}")
+
+        # print(SAVED_FILE)
+        with open(SAVED_FILE, "wb") as f:
+            f.write(contents)
         return newBook
+        # return FileResponse(path=SAVED_FILE, media_type="application/octet-stream", filename=f"{file.filename}")
 
     def getBooks(bookName: str, db: Session):
         book = db.query(Books).filter(bookName == Books.title).first()
@@ -72,7 +81,24 @@ class BookService:
                 status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Book with title *{bookName}* does not exists")
 
         else:
-            return book
+            filename = f"{book.id}.pdf"
+            SAVED_FILE = os.path.join(f"{UPLOAD_DIR}", filename)
+            return book, FileResponse(
+                path=SAVED_FILE, media_type="application/octet-stream", filename=f"{filename}")
+
+    def downloadBooks(bookName: str, db: Session):
+        book = db.query(Books).filter(bookName == Books.title).first()
+
+        print(book)
+        if book is None:
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Book with title *{bookName}* does not exists")
+
+        else:
+            filename = f"{book.id}.pdf"
+            SAVED_FILE = os.path.join(f"{UPLOAD_DIR}", filename)
+            return FileResponse(
+                path=SAVED_FILE, media_type="application/octet-stream", filename=f"{filename}")
 
     def updateBookUser(req: updateBookUser, db: Session):
         book: Books = db.query(Books).filter(Books.id == req.book_id).first()

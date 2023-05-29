@@ -1,5 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
+from fastapi import File
+from typing import Annotated
 
 
 class updateBookUser(BaseModel):
@@ -59,6 +61,13 @@ class BookResponse(BaseModel):
     genres: list[Genres]
     bookDetail: list[BookDetailInput]
     userRented: Optional[UserBook] = None
+
+    class Config:
+        orm_mode = True
+
+
+class BookResponse_file(BaseModel):
+    book: BookResponse
 
     class Config:
         orm_mode = True
