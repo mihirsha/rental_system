@@ -11,56 +11,56 @@ pipeline {
     }
 
     stages {
-    //     stage('GIT Checkout') {
-    //         steps {
-    //             git changelog: false, poll: false, url: 'https://github.com/mihirsha/rental_system.git'
-    //         }
-    //     }
+        stage('GIT Checkout') {
+            steps {
+                git changelog: false, poll: false, url: 'https://github.com/mihirsha/rental_system.git'
+            }
+        }
         
-    //     stage('OWASP Scan') {
-    //         steps {
-    //             dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
-    //         }
-    //     }
+        stage('OWASP Scan') {
+            steps {
+                dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
+            }
+        }
         
-    //     stage('Sonar Analysis') {
-    //         steps {
-    //             withSonarQubeEnv('sonar-server') {
-    //                 sh '''
-    //                     $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
-    //                 '''
-    //             }  
-    //         }
-    //     }
+        stage('Sonar Analysis') {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh '''
+                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=rental_system -Dsonar.projectKey=rental_system
+                    '''
+                }  
+            }
+        }
         
 
-    //     stage('Build') {
-    //         steps {
-    //             script{
-    //                 withDockerRegistry(credentialsId: 'dockerhub') {
-    //                     sh """
+        stage('Build') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub') {
+                        sh """
                         
-    //                         docker build --no-cache -t $DOCKER_IMAGE .
+                            docker build --no-cache -t $DOCKER_IMAGE .
                             
                             
-    //                     """
-    //                 }
-    //             }
-    //         }
-    //     }
+                        """
+                    }
+                }
+            }
+        }
 
-    //     stage('Trivy Scan & Push') {
-    //         steps {
-    //             script{
-    //                 withDockerRegistry(credentialsId: 'dockerhub') {
-    //                     sh """
-    //                         trivy image $DOCKER_IMAGE > trivyReport.txt
-    //                         docker push $DOCKER_IMAGE
-    //                     """
-    //                 }
-    //             }
-    //         }
-    //     }
+        stage('Trivy Scan & Push') {
+            steps {
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub') {
+                        sh """
+                            trivy image $DOCKER_IMAGE > trivyReport.txt
+                            docker push $DOCKER_IMAGE
+                        """
+                    }
+                }
+            }
+        }
         
         stage('Testing') {
             steps {
