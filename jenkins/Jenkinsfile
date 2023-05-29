@@ -10,7 +10,7 @@ pipeline {
         DOCKER_CREDENTIALS=credentials('dockerhub')
     }
 
-    // stages {
+    stages {
     //     stage('GIT Checkout') {
     //         steps {
     //             git changelog: false, poll: false, url: 'https://github.com/mihirsha/rental_system.git'
