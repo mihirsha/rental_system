@@ -1,5 +1,5 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean, DateTime, UUID
 from sqlalchemy.orm import relationship
 
 
@@ -33,7 +33,7 @@ association_book_genre = Table(
 class Books(Base):
     __tablename__ = "book"
 
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = Column(UUID, primary_key=True, nullable=False, autoincrement=True)
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     authors = relationship(
