@@ -11,6 +11,11 @@ class BookService:
 
     async def addBook(reqbook: Book, db: Session, file):
 
+        lt = file.filename.split('.')
+        if lt[-1] != 'pdf':
+            raise HTTPException(
+                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"only pdf accepted")
+
         authorsList = []
         genreList = []
         book = db.query(Books).filter(reqbook.title == Books.title).first()
