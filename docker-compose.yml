@@ -6,32 +6,32 @@ networks:
 
 services:
 
-  # fastapi:
-  #   image: ${DOCKER_MAIN_IMAGE}
-  #   container_name: rental_service
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - '8000:8080'
-  #   env_file:
-  #     - ./.env
-  #   networks:
-  #     - fastapi-networks
-  #   volumes:
-  #     - static:/static
-  #     - ./:/usr/src/app:ro
+  fastapi:
+    image: ${DOCKER_MAIN_IMAGE}
+    container_name: rental_service
+    depends_on:
+      - db
+    ports:
+      - '8000:8080'
+    env_file:
+      - ./.env
+    networks:
+      - fastapi-networks
+    volumes:
+      - static:/static
+      - ./:/usr/src/app:ro
 
-  # nginx: 
-  #   build: ./nginx
-  #   container_name: nginx
-  #   volumes:
-  #     - static:/static
-  #   ports:
-  #     - '80:80'
-  #   depends_on:
-  #     - fastapi
-  #   networks:
-  #     - fastapi-networks
+  nginx: 
+    build: ./nginx
+    container_name: nginx
+    volumes:
+      - static:/static
+    ports:
+      - '80:80'
+    depends_on:
+      - fastapi
+    networks:
+      - fastapi-networks
 
   db:
     depends_on:
