@@ -67,11 +67,12 @@ pipeline {
                 dir('.'){
                     // echo $USER_CREDENTIALS_PSW | sudo -E -S apt install python3
 
-                        // virtualenv venv
-                        // . venv/bin/activate
-                        // pip install --no-cache-dir -r requirements.txt --timeout=100
-                        // echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
+
                     sh """
+                        virtualenv venv
+                        . venv/bin/activate
+                        pip install --no-cache-dir -r requirements.txt --timeout=100
+                        echo $USER_CREDENTIALS_PSW | sudo -E -S service postgresql stop
                         docker-compose up -d
                         pytest --html=report.html .                     
                         docker-compose down
