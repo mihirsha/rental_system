@@ -1,0 +1,151 @@
+# NAMESPACE APP
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rental-system
+
+---
+# DEPLOYMENT APP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rental-deply
+#  namespace: rental-system
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: rental_app
+  template:
+    metadata:
+      labels:
+        app: rental_app
+    spec:
+      containers:
+      - name: fastapi
+        image: mihirshah01/rentalsystem:0.3
+        ports:
+        - containerPort: 8000
+
+---
+# SERVICE
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: fastapi-service
+#  namespace: rental-system
+spec:
+  selector:
+    app: rental_app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+
+---
+# DEPLOYMENT APP
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deply
+#  namespace: rental-system
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:kub
+        ports:
+        - containerPort: 80
+
+---
+# SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+#  namespace: rental-system
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+
+
+---
+# INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rental-ingress
+#  namespace: rental-system
+  annotations:
+    nginx-ingres.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx
+                port:
+                  number: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+#  namespace: rental-system
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest
+          imagePullPolicy: "IfNotPresent"
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgresdb
+      volumes:
+        - name: postgresdb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+#  namespace: rental-system
+  labels:
+    app: postgres
+spec:
+  ports:
+    - name: postgres
+      port: 5432
+  selector:
+    app: postgres
+---
