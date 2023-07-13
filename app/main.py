@@ -3,14 +3,17 @@ from app.controller import UserController, AuthorController, BookController, Gen
 import app.auth as auth
 from app.jobs.newjobs import scheduler
 from app.utils import send_email
-
 from app.database.database import get_db
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, status, HTTPException
+from pika import BlockingConnection, ConnectionParameters
 
 app = FastAPI()
 
-# scheduler.start()
+
+def get_rabbitmq_connection():
+    return BlockingConnection(ConnectionParameters('localhost'))
+
 
 app.include_router(auth.router)
 app.include_router(UserController.router)

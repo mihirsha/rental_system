@@ -5,6 +5,7 @@ autopep8==2.0.2
 bcrypt==4.0.1
 certifi==2022.12.7
 cffi==1.15.1
+charset-normalizer==3.1.0
 click==8.1.3
 cryptography==40.0.2
 dnspython==2.3.0
@@ -13,6 +14,7 @@ ecdsa==0.18.0
 email-validator==2.0.0.post2
 exceptiongroup==1.1.1
 fastapi==0.95.1
+freetype-py==2.3.0
 greenlet==2.0.2
 gunicorn==20.1.0
 h11==0.14.0
@@ -32,11 +34,15 @@ orjson==3.8.11
 packaging==23.1
 pandas==2.0.1
 passlib==1.7.4
+pdfkit==1.0.0
+pika==1.3.2
+Pillow==9.5.0
 pluggy==1.0.0
 psycopg2-binary==2.9.6
 py==1.11.0
 pyarrow==11.0.0
 pyasn1==0.5.0
+pycairo==1.23.0
 pycodestyle==2.10.0
 pycparser==2.21
 pydantic==1.10.7
@@ -50,6 +56,9 @@ python-jose==3.3.0
 python-multipart==0.0.6
 pytz==2023.3
 PyYAML==6.0
+reportlab==4.0.0
+requests==2.31.0
+rlPyCairo==0.2.0
 rsa==4.9
 secure-smtplib==0.1.1
 six==1.16.0
@@ -61,7 +70,9 @@ typing_extensions==4.5.0
 tzdata==2023.3
 tzlocal==2.1
 ujson==5.7.0
+urllib3==2.0.2
 uvicorn==0.22.0
 uvloop==0.17.0
 watchfiles==0.19.0
 websockets==11.0.2
+wkhtmltopdf==0.2

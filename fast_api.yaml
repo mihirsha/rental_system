@@ -114,7 +114,7 @@ spec:
   selector:
     matchLabels:
       app: postgres
-  replicas: 5
+  replicas: 10
   template:
     metadata:
       labels:
