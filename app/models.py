@@ -14,6 +14,17 @@ class User(Base):
     books = relationship('Books', back_populates='userRented')
     cart = relationship('CartItems', back_populates='user')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'password': self.password,
+            'name': self.name,
+            'phoneNumber': self.phoneNumber,
+            'books': self.books,
+            'cart': self.cart,
+        }
+
 
 association_book_author = Table(
     'association_book_author',

@@ -34,8 +34,8 @@ services:
       - fastapi-networks
 
   db:
-    depends_on:
-      - db_test
+    # depends_on:
+    #   - db_test
     image: postgres
     container_name: postgres
     restart: always
