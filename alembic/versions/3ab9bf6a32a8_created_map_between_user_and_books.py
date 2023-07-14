@@ -18,7 +18,7 @@ depends_on = None
 
 def upgrade() -> None:
 
-    op.add_column('book', sa.Column('user_id', sa.Integer()))
+    op.add_column('book', sa.Column('user_id', sa.UUID()))
 
     op.create_foreign_key(
         "fk_book_user",

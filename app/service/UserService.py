@@ -5,7 +5,7 @@ from fastapi import status, HTTPException
 from app.models import User
 from app.utils import hash, validMobileNumber
 import json
-from app.controller import UserController as UC
+from app.rabbitMq import publish_to_rabbitmq
 import uuid
 
 
@@ -22,34 +22,25 @@ class UserService:
 
         if not validMobileNumber(user.phoneNumber):
             raise HTTPException(
-                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Invalid phone no.")
+                status_code=406, detail=f"Invalid phone no.")
 
         user_fetched = db.query(User).filter(user.email == User.email).first()
 
         if user_fetched is not None:
             raise HTTPException(
-                status_code=status.HTTP_406_NOT_ACCEPTABLE, detail=f"Account {user.email} already present")
+                status_code=406, detail=f"Account {user.email} already present")
         else:
             hashed_password = hash(user.password)
             user.password = hashed_password
             new_user = User(**user.dict())
 
-            new_user.id = 1
+            new_user.id = str(uuid.uuid4())
             user_json_string = json.dumps(new_user.to_dict())
-            status = UC.publish_to_rabbitmq(user_json_string)
-            if status == 200:
-                msg_to_be_returned = new_user
+            status = publish_to_rabbitmq(user_json_string)
 
-            sleep(20)
-            status, msg_arr = UC.get_from_rabbitmq()
             if status == 200:
-                new_user_msg = User(**msg_arr[0])
-                db.add(new_user_msg)
-                db.commit()
-                db.refresh(new_user_msg)
-                return 201, msg_to_be_returned
-            else:
-                return 401, msg_to_be_returned
+                return 200, new_user
+            return 406, new_user
 
     def getUser(email: str, db: Session):
         user = db.query(User).filter(User.email == email).first()

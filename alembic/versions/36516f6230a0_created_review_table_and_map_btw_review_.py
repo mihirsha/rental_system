@@ -20,7 +20,7 @@ def upgrade() -> None:
     op.create_table('review',
                     sa.Column('id', sa.Integer(),
                               nullable=False, primary_key=True),
-                    sa.Column('user_id', sa.Integer(), nullable=False),
+                    sa.Column('user_id', sa.UUID(), nullable=False),
                     sa.Column('review', sa.String(), nullable=False)
                     )
 

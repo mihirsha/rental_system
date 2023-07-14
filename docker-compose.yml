@@ -6,11 +6,12 @@ networks:
 
 services:
 
-  fastapi:
+  fastapi-service:
     image: ${DOCKER_MAIN_IMAGE}
     container_name: rental_service
     depends_on:
       - db
+      - rabbitmq
     ports:
       - '8000:8080'
     env_file:
@@ -29,13 +30,14 @@ services:
     ports:
       - '80:80'
     depends_on:
-      - fastapi
+      - fastapi-service
     networks:
       - fastapi-networks
 
   db:
-    # depends_on:
-    #   - db_test
+    depends_on:
+      - db_test
+      # - rabbitmq
     image: postgres
     container_name: postgres
     restart: always
@@ -60,6 +62,16 @@ services:
       - '7878:5432'
     networks:
       - fastapi-networks
+
+  rabbitmq:
+      image: rabbitmq:3-management
+      container_name: rabbitmq
+      restart: always
+      ports:
+        - '15672:15672'
+        - '5672:5672'
+      networks:
+        - fastapi-networks
 
 volumes:
   static:

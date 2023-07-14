@@ -1,12 +1,12 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, Boolean, DateTime, UUID
 from sqlalchemy.orm import relationship
 
 
 class User(Base):
     __tablename__ = "user"
 
-    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    id = Column(UUID, primary_key=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     name = Column(String, nullable=False)
