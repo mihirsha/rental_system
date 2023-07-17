@@ -25,7 +25,8 @@ def publish_to_rabbitmq(message: str):
 def get_from_rabbitmq():
     connection = get_rabbitmq_connection()
     channel = connection.channel()
-    queue_declare_result = channel.queue_declare(queue='fast_api_queue_user')
+    queue_declare_result = channel.queue_declare(
+        queue='fast_api_queue_user')
 
     queue_name = queue_declare_result.method.queue
     queue_length = queue_declare_result.method.message_count
@@ -35,15 +36,14 @@ def get_from_rabbitmq():
     recieved_msg = []
 
     def callback(ch, method, properties, body):
-
+        channel.basic_ack(delivery_tag=method.delivery_tag)
         nonlocal count
         count -= 1
-        # if count > 0:
-        payload = json.loads(body)
-        recieved_msg.append(payload)
-        ch.basic_ack(delivery_tag=method.delivery_tag)
-        # else:
-        channel.stop_consuming()
+        if count >= 0:
+            payload = json.loads(body)
+            recieved_msg.append(payload)
+        else:
+            channel.stop_consuming()
 
     channel.basic_consume(
         on_message_callback=callback, queue=queue_name)

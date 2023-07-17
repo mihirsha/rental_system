@@ -83,6 +83,7 @@ def store_db():
     db = SessionLocal()
 
     messages = get_from_rabbitmq()
+    print(messages)
 
     for message in messages:
         # json_msg = json.loads(message)
@@ -96,5 +97,5 @@ def store_db():
 
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(store_db, trigger='interval', seconds=15,
+scheduler.add_job(store_db, trigger='interval', seconds=30,
                   timezone="Asia/Kolkata", )

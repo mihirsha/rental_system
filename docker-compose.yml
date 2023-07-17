@@ -37,7 +37,7 @@ services:
   db:
     depends_on:
       - db_test
-      # - rabbitmq
+      - rabbitmq
     image: postgres
     container_name: postgres
     restart: always

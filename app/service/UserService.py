@@ -37,7 +37,6 @@ class UserService:
             new_user.id = str(uuid.uuid4())
             user_json_string = json.dumps(new_user.to_dict())
             status = publish_to_rabbitmq(user_json_string)
-
             if status == 200:
                 return 200, new_user
             return 406, new_user
