@@ -49,4 +49,5 @@ def get_from_rabbitmq():
         on_message_callback=callback, queue=queue_name)
     if queue_length > 0:
         channel.start_consuming()
+    connection.close()
     return recieved_msg
